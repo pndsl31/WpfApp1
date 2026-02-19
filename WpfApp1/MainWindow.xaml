@@ -1,19 +1,19 @@
-﻿<Window x:Class="myfirstwpf.MainWindow"
+﻿<Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:myfirstwpf"
+        xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="496" WindowStartupLocation="CenterScreen">
 
     <Grid >
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\24-0150c\Downloads\purple-aesthetic-3840x2160-17734.jpg"/>
+            <ImageBrush ImageSource="C:\Users\Robert\Desktop\SV\College\2nd year\2nd sem\programming\purple-aesthetic-2880x1800-17734.jpg"/>
         </Grid.Background>
 
         <StackPanel>
-            <Image Source="C:\Users\24-0150c\Downloads\P-removebg-preview.png"  Width="167" Height="120" Opacity="0.985"/>
+            <Image x:Name="LoginLogo" Source="C:\Users\Robert\Desktop\SV\College\2nd year\2nd sem\programming\P_logo-removebg-preview.png" Height="116" Width="253"/>
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="PEYSBUK" VerticalAlignment="Top"  FontSize="50 " FontFamily="Bahnschrift SemiBold" FontStyle="Italic" FontWeight="UltraBold">
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -23,16 +23,14 @@
                 </TextBlock.Foreground>
             </TextBlock>
             <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
-            <TextBox TextWrapping="NoWrap" Text="Enter Username..." Height="36" FontSize="20" FontFamily="OCR A Extended" TextChanged="TextBox_TextChanged_2"/>
+            <TextBox TextWrapping="NoWrap" Text="Enter Username..." Height="36" FontSize="20" FontFamily="OCR A Extended" />
             <TextBlock TextWrapping="Wrap" Text="Password: "  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
-            <TextBox TextWrapping="Wrap" Text="Enter Password..." Width="493" Height="36" FontSize="20" FontFamily="OCR A Extended" TextChanged="TextBox_TextChanged_1"/>
-            <Button x:Name="LogInButton_LOGINPAGE" Content="Log in" Height="27" Width="72" FontSize="15" BorderBrush="White" Foreground="#FF1E1369" Background="#FFF1F0F5"  FontWeight="Bold" Click="Button_Click"/>
+            <TextBox TextWrapping="NoWrap" Text="Enter Username..." Height="36" FontSize="20" FontFamily="OCR A Extended"/>
+
+            <Button x:Name="LogInButton_LOGINPAGE" Content="Log in" Height="27" 
+        Width="72" FontSize="15" BorderBrush="White" Foreground="#FF1E1369" 
+        Background="#FFF1F0F5" FontWeight="Bold" Click="LogInButton_LOGINPAGE_Click"/>
 
         </StackPanel>
-
-
-
-
-
     </Grid>
 </Window>

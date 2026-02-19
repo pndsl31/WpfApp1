@@ -20,5 +20,12 @@ namespace WpfApp1
         {
             InitializeComponent();
         }
+
+        private void LogInButton_LOGINPAGE_Click(object sender, RoutedEventArgs e)
+        {
+            Window1 mainWindow = new Window1();
+            mainWindow.Show();
+            this.Close();
+        }
     }
 }
