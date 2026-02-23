@@ -8,4 +8,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\P-removebg-preview.png" />
+    <None Remove="Images\purple-aesthetic-3840x2160-17734.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\P-removebg-preview.png" />
+    <Resource Include="Images\purple-aesthetic-3840x2160-17734.jpg" />
+  </ItemGroup>
+
 </Project>

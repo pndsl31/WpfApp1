@@ -1,30 +1,27 @@
 ﻿using System.Windows;
 
-namespace WpfApp1
+namespace WpfApp1.View
 {
-    public partial class ProfileWindow : Window
+    public partial class SubjectsWindow : Window
     {
-        public ProfileWindow()
+        public SubjectsWindow()
         {
             InitializeComponent();
         }
 
-
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            Window1 dashboard = new Window1();
+            View.Window1 dashboard = new View.Window1();
             dashboard.Show();
             this.Close();
         }
 
-
         private void SubjectsWindow_Click(object sender, RoutedEventArgs e)
         {
-            SubjectsWindow subjectsWindow = new SubjectsWindow();
+            View.SubjectsWindow subjectsWindow = new View.SubjectsWindow();
             subjectsWindow.Show();
             this.Close();
         }
-
 
         private void GradesWindow_Click(object sender, RoutedEventArgs e)
         {
@@ -33,15 +30,16 @@ namespace WpfApp1
             this.Close();
         }
 
-
         private void ProfileWindow_Click(object sender, RoutedEventArgs e)
         {
-
+            View.ProfileWindow profileWindow = new View.ProfileWindow();
+            profileWindow.Show();
+            this.Close();
         }
 
         private void LogoutWindow_Dashboard_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+            View.MainWindow mainWindow = new View.MainWindow();
             mainWindow.Show();
             this.Close();
         }

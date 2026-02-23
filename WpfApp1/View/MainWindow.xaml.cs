@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp1
+namespace WpfApp1.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,7 +23,7 @@ namespace WpfApp1
 
         private void LogInButton_LOGINPAGE_Click(object sender, RoutedEventArgs e)
         {
-            Window1 mainWindow = new Window1();
+            View.Window1 mainWindow = new View.Window1();
             mainWindow.Show();
             this.Close();
         }

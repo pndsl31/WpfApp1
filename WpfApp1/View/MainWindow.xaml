@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfApp1.MainWindow"
+﻿<Window x:Class="WpfApp1.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,12 +9,12 @@
 
     <Grid >
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Robert\Desktop\SV\College\2nd year\2nd sem\programming\purple-aesthetic-2880x1800-17734.jpg"/>
+            <ImageBrush ImageSource="../Images/purple-aesthetic-3840x2160-17734.jpg"/>
         </Grid.Background>
 
         <StackPanel>
-            <Image x:Name="LoginLogo" Source="C:\Users\Robert\Desktop\SV\College\2nd year\2nd sem\programming\P_logo-removebg-preview.png" Height="116" Width="253"/>
-            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="PEYSBUK" VerticalAlignment="Top"  FontSize="50 " FontFamily="Bahnschrift SemiBold" FontStyle="Italic" FontWeight="UltraBold">
+            <Image x:Name="LoginLogo" Source="../Images/P-removebg-preview.png" Height="116" Width="253"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Poodle" VerticalAlignment="Top"  FontSize="50 " FontFamily="Bahnschrift SemiBold" FontStyle="Italic" FontWeight="UltraBold">
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="White"/>

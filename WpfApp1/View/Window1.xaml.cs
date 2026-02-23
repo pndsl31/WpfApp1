@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WpfApp1
+namespace WpfApp1.View
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -24,38 +24,37 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-    
-
-
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-
+            View.GradesWindow gradesWindow = new View.GradesWindow();
+            gradesWindow.Show();
+            this.Close();
         }
         private void LogoutWindow_Dashboard_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+            View.MainWindow mainWindow = new View.MainWindow();
             mainWindow.Show();
             this.Close();
         }
 
         private void ProfileWindow_Click(object sender, RoutedEventArgs e)
         {
-            ProfileWindow profileWindow = new ProfileWindow();
+            View.ProfileWindow profileWindow = new View.ProfileWindow();
             profileWindow.Show();
             this.Close();
         }
 
         private void GradesWindow_Click(object sender, RoutedEventArgs e)
         {
-            GradesWindow gradesWindow = new GradesWindow();
+            View.GradesWindow gradesWindow = new View.GradesWindow();
             gradesWindow.Show();
             this.Close();
         }
 
         private void SubjectsWindow_Click(object sender, RoutedEventArgs e)
         {
-            SubjectsWindow subjectsWindow = new SubjectsWindow();
+            View.SubjectsWindow subjectsWindow = new View.SubjectsWindow();
             subjectsWindow.Show();
             this.Close();
         }
