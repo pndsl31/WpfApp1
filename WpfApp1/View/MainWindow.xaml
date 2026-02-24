@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="804" Width="608" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush ImageSource="../View/purple-aesthetic-3840x2160-17734.jpg"/>
     </Window.Background>
 
     <Viewbox Stretch= "Uniform">
-        <Grid>
+        <Grid Height="350">
             <StackPanel>
                 <Image x:Name="LoginLogo" Source="../Images/P-removebg-preview.png" Height="116" Width="253"/>
                 <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Poodle" VerticalAlignment="Top"  FontSize="50 " FontFamily="Bahnschrift SemiBold" FontStyle="Italic" FontWeight="UltraBold">
@@ -23,9 +23,9 @@
                     </TextBlock.Foreground>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
-                <TextBox TextWrapping="NoWrap" Text="Enter Username..." Height="36" FontSize="20" FontFamily="OCR A Extended" />
+                <TextBox TextWrapping="NoWrap" Text="Enter Username..." Height="25" FontSize="20" FontFamily="OCR A Extended" />
                 <TextBlock TextWrapping="Wrap" Text="Password: "  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
-                <TextBox TextWrapping="NoWrap" Text="Enter Password..." Height="36" FontSize="20" FontFamily="OCR A Extended"/>
+                <TextBox TextWrapping="NoWrap" Text="Enter Password..." Height="25" FontSize="20" FontFamily="OCR A Extended"/>
 
                 <Button x:Name="LogInButton_LOGINPAGE" Content="Log in" Height="27" 
                 Width="72" FontSize="15" BorderBrush="White" Foreground="#FF1E1369" 
