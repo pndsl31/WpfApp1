@@ -5,32 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="496" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="804" Width="608" WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="../View/purple-aesthetic-3840x2160-17734.jpg"/>
+    </Window.Background>
 
-    <Grid >
-        <Grid.Background>
-            <ImageBrush ImageSource="../Images/purple-aesthetic-3840x2160-17734.jpg"/>
-        </Grid.Background>
+    <Viewbox Stretch= "Uniform">
+        <Grid>
+            <StackPanel>
+                <Image x:Name="LoginLogo" Source="../Images/P-removebg-preview.png" Height="116" Width="253"/>
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Poodle" VerticalAlignment="Top"  FontSize="50 " FontFamily="Bahnschrift SemiBold" FontStyle="Italic" FontWeight="UltraBold">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="White"/>
+                            <GradientStop Color="#FF5C17E9" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
+                <TextBox TextWrapping="NoWrap" Text="Enter Username..." Height="36" FontSize="20" FontFamily="OCR A Extended" />
+                <TextBlock TextWrapping="Wrap" Text="Password: "  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
+                <TextBox TextWrapping="NoWrap" Text="Enter Password..." Height="36" FontSize="20" FontFamily="OCR A Extended"/>
 
-        <StackPanel>
-            <Image x:Name="LoginLogo" Source="../Images/P-removebg-preview.png" Height="116" Width="253"/>
-            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Poodle" VerticalAlignment="Top"  FontSize="50 " FontFamily="Bahnschrift SemiBold" FontStyle="Italic" FontWeight="UltraBold">
-                <TextBlock.Foreground>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="White"/>
-                        <GradientStop Color="#FF5C17E9" Offset="1"/>
-                    </LinearGradientBrush>
-                </TextBlock.Foreground>
-            </TextBlock>
-            <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
-            <TextBox TextWrapping="NoWrap" Text="Enter Username..." Height="36" FontSize="20" FontFamily="OCR A Extended" />
-            <TextBlock TextWrapping="Wrap" Text="Password: "  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
-            <TextBox TextWrapping="NoWrap" Text="Enter Username..." Height="36" FontSize="20" FontFamily="OCR A Extended"/>
+                <Button x:Name="LogInButton_LOGINPAGE" Content="Log in" Height="27" 
+                Width="72" FontSize="15" BorderBrush="White" Foreground="#FF1E1369" 
+                Background="#FFF1F0F5" FontWeight="Bold" Click="LogInButton_LOGINPAGE_Click"/>
 
-            <Button x:Name="LogInButton_LOGINPAGE" Content="Log in" Height="27" 
-        Width="72" FontSize="15" BorderBrush="White" Foreground="#FF1E1369" 
-        Background="#FFF1F0F5" FontWeight="Bold" Click="LogInButton_LOGINPAGE_Click"/>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
 
-        </StackPanel>
-    </Grid>
 </Window>
