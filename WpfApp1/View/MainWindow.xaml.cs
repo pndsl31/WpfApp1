@@ -19,13 +19,7 @@ namespace WpfApp1.View
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void LogInButton_LOGINPAGE_Click(object sender, RoutedEventArgs e)
-        {
-            View.Window1 mainWindow = new View.Window1();
-            mainWindow.Show();
-            this.Close();
+            this.DataContext = new ViewModel.LoginViewModel();
         }
     }
 }
