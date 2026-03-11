@@ -21,5 +21,10 @@ namespace WpfApp1.View
             InitializeComponent();
             this.DataContext = new ViewModel.LoginViewModel();
         }
+
+        private void LogInButton_LOGINPAGE_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
