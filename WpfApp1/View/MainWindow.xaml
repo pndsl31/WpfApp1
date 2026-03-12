@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
     <Window.Background>
-        <ImageBrush ImageSource="../View/purple-aesthetic-3840x2160-17734.jpg"/>
+        <ImageBrush ImageSource="../Images/purple-aesthetic-3840x2160-17734.jpg"/>
     </Window.Background>
 
     <Viewbox Stretch= "Uniform">

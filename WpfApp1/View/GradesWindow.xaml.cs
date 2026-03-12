@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfApp1.ViewModel;
 
 namespace WpfApp1.View
 {
@@ -7,6 +8,7 @@ namespace WpfApp1.View
         public GradesWindow()
         {
             InitializeComponent();
+            this.DataContext = new GradesWindowVM();
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
