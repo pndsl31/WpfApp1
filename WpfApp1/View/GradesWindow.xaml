@@ -9,8 +9,8 @@
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="131*"/>
-                <ColumnDefinition Width="29*"/>
+                <ColumnDefinition Width="111*"/>
+                <ColumnDefinition Width="40*"/>
             </Grid.ColumnDefinitions>
             <Grid.Background>
                 <ImageBrush ImageSource="../Images/purple-aesthetic-3840x2160-17734.jpg"/>
@@ -93,9 +93,53 @@
                 <DataGrid ItemsSource="{Binding table1List}" 
                       AutoGenerateColumns="True" 
                       CanUserAddRows="False" 
-                      AlternatingRowBackground="LightGray" Margin="52,102,52,36" BorderBrush="#FFAC41CB" Background="White" Foreground="White" />
+                      AlternatingRowBackground="LightGray" Margin="53,82,129,56" BorderBrush="#FFAC41CB" Background="White" Foreground="black" SelectionChanged="DataGrid_SelectionChanged" 
+                          />
             </Grid>
+            <Rectangle Grid.Column="1" HorizontalAlignment="Center" Height="229" Margin="0,79,0,0" Grid.Row="2" Stroke="Black" VerticalAlignment="Top" Width="161" Fill="#FF110C57"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Height="24" Margin="0,93,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Input Grades" VerticalAlignment="Top" Width="82" Foreground="White" FontFamily="Century Gothic"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="41,152,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="18" Foreground="White" FontFamily="Century Gothic"><Run Text="ID"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="41,177,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Foreground="White" FontFamily="Century Gothic"><Run Text="Subject"/><LineBreak/><Run/></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="41,152,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="18" Foreground="White" FontFamily="Century Gothic"><Run Text="ID"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="41,201,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Foreground="White" FontFamily="Century Gothic" Text="Grades"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="41,225,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" Foreground="White" FontFamily="Century Gothic" Text="DateReported"/>
+
+            <TextBox x:Name="txtID"
+             Grid.Column="1"
+             Margin="127,149,25,0"
+             Width="60"
+             Height="20"
+             VerticalAlignment="Top" Grid.Row="2"/>
+
+            <TextBox x:Name="txtSubject"
+             Grid.Column="1"
+             Margin="127,174,25,0"
+             Width="60"
+             Height="20"
+             VerticalAlignment="Top" Grid.Row="2"/>
+
+            <TextBox x:Name="txtGrades"
+             Grid.Column="1"
+             Margin="127,200,25,0"
+             Width="60"
+             Height="20"
+             VerticalAlignment="Top" Grid.Row="2"/>
+
+            <DatePicker x:Name="dpDate"
+            Grid.Column="1"
+            Margin="127,225,25,0"
+            Height="20"
+            VerticalAlignment="Top" Grid.Row="2"/>
+
+
+
+            <Button Content="Add"
+            Grid.Column="1"
+            Margin="65,267,67,62"
+            Width="80"
+            Height="25"
+            Click="AddGrade_Click" Grid.Row="2" />
         </Grid>
     </Grid>
-    
+
 </Window>

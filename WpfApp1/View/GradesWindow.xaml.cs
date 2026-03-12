@@ -1,49 +1,67 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using WpfApp1.Model;
 using WpfApp1.ViewModel;
 
 namespace WpfApp1.View
 {
     public partial class GradesWindow : Window
     {
+        GradesWindowVM vm = new GradesWindowVM();
+
         public GradesWindow()
         {
             InitializeComponent();
-            this.DataContext = new GradesWindowVM();
+            DataContext = vm;
+        }
+
+        private void AddGrade_Click(object sender, RoutedEventArgs e)
+        {
+            table1 newGrade = new table1()
+            {
+                ID = txtID.Text,
+                Subject = txtSubject.Text,
+                Grades = txtGrades.Text,
+                DateReported = dpDate.SelectedDate ?? DateTime.Now,
+                IsComplete = true
+            };
+
+            vm.table1List.Add(newGrade);
+
+            txtID.Text = "";
+            txtSubject.Text = "";
+            txtGrades.Text = "";
+            dpDate.SelectedDate = null;
+        }
+        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            View.GradesWindow gradesWindow = new View.GradesWindow();
-            gradesWindow.Show();
-            this.Close();
+
         }
 
         private void SubjectsWindow_Click(object sender, RoutedEventArgs e)
         {
-            View.SubjectsWindow subjectsWindow = new View.SubjectsWindow();
-            subjectsWindow.Show();
-            this.Close();
+
         }
 
         private void GradesWindow_Click(object sender, RoutedEventArgs e)
         {
-            View.GradesWindow gradesWindow = new View.GradesWindow();
-            gradesWindow.Show();
-            this.Close();
+
         }
 
         private void ProfileWindow_Click(object sender, RoutedEventArgs e)
         {
-            View.ProfileWindow profileWindow = new View.ProfileWindow();
-            profileWindow.Show();
-            this.Close();
+
         }
 
         private void LogoutWindow_Dashboard_Click(object sender, RoutedEventArgs e)
         {
-            View.MainWindow mainWindow = new View.MainWindow();
-            mainWindow.Show();
-            this.Close();
+
         }
+
     }
 }

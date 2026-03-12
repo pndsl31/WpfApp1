@@ -25,5 +25,7 @@ namespace WpfApp1.ViewModel
                 new table1 { ID = " 05", Subject = "MAPEH", Grades = "96", DateReported = new DateTime(2024, 5, 20), IsComplete = true }
             };
         }
+
+
     }
 }
