@@ -15,7 +15,7 @@ namespace WpfApp1.Model
         private string _subject = string.Empty;
         private string _grades = string.Empty;
         private DateTime _dateReported = DateTime.Now;
-        private bool _isComplete = false;
+        private bool _isComplete = true;
 
         public string ID
         {

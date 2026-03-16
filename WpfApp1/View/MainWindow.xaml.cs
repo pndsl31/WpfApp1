@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.Model;
 
 namespace WpfApp1.View
 {
@@ -20,9 +21,6 @@ namespace WpfApp1.View
         {
             InitializeComponent();
             this.DataContext = new ViewModel.LoginViewModel();
-            GradesWindow gradesWindow = new GradesWindow();
-            gradesWindow.Show();
-            this.Close();
         }
 
 

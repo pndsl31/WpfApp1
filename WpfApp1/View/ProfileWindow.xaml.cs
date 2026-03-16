@@ -1,18 +1,21 @@
 ﻿using System.Windows;
+using WpfApp1.Model;
 
 namespace WpfApp1.View
 {
     public partial class ProfileWindow : Window
     {
-        public ProfileWindow()
+        public UserModel CurrentUser { get; set; }
+        public ProfileWindow(UserModel _CurrentUser)
         {
+            CurrentUser = _CurrentUser;
             InitializeComponent();
         }
 
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            View.Window1 dashboard = new View.Window1();
+            View.Window1 dashboard = new View.Window1(CurrentUser);
             dashboard.Show();
             this.Close();
         }
@@ -20,7 +23,7 @@ namespace WpfApp1.View
 
         private void SubjectsWindow_Click(object sender, RoutedEventArgs e)
         {
-            View.SubjectsWindow subjectsWindow = new View.SubjectsWindow();
+            View.SubjectsWindow subjectsWindow = new View.SubjectsWindow(CurrentUser);
             subjectsWindow.Show();
             this.Close();
         }
@@ -28,7 +31,7 @@ namespace WpfApp1.View
 
         private void GradesWindow_Click(object sender, RoutedEventArgs e)
         {
-            GradesWindow gradesWindow = new GradesWindow();
+            GradesWindow gradesWindow = new GradesWindow(CurrentUser);
             gradesWindow.Show();
             this.Close();
         }
@@ -36,7 +39,7 @@ namespace WpfApp1.View
 
         private void ProfileWindow_Click(object sender, RoutedEventArgs e)
         {
-            View.ProfileWindow profileWindow = new View.ProfileWindow();
+            View.ProfileWindow profileWindow = new View.ProfileWindow(CurrentUser);
             profileWindow.Show();
             this.Close();
         }
