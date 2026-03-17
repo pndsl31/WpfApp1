@@ -18,6 +18,11 @@ namespace WpfApp1.ViewModel
 
         public ICommand SaveCommand { get; set; }
 
+        public ICommand DeleteCommand { get; set; }
+
+        public ICommand ClearCommand { get; set; }
+
+
         public table1 newAccount { get; set; }
 
         public GradesWindowVM(UserModel CurrentUser)
@@ -33,7 +38,11 @@ namespace WpfApp1.ViewModel
             };
             newAccount = new table1();
 
+            _selectedItem = new table1();
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
+            DeleteCommand = new RelayCommand(ExecuteDeleteCommand);
+            ClearCommand = new RelayCommand(ExecuteClearCommand);
+
         }
         public void ExecuteSaveCommand(object? par)
         {
@@ -54,6 +63,41 @@ namespace WpfApp1.ViewModel
             newAccount.Grades = "";
             newAccount.DateReported = DateTime.Now;
             newAccount.IsComplete = true;
+        }
+
+        private table1 _selectedItem;
+        
+        public table1 SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyCHanged(nameof(SelectedItem));
+
+                if (SelectedItem != null)
+                {
+                    newAccount.ID = SelectedItem.ID;
+                    newAccount.Subject = SelectedItem.Subject;
+                    newAccount.Grades = SelectedItem.Grades;
+                    newAccount.DateReported = SelectedItem.DateReported;
+                    newAccount.IsComplete = SelectedItem.IsComplete;
+                }
+
+            }
+        }
+
+        public void ExecuteDeleteCommand(object? par)
+        {
+            table1List.Remove(SelectedItem);
+        }
+
+        public void ExecuteClearCommand(object? par)
+        {
+            newAccount.ID = string.Empty;
+            newAccount.Subject = string.Empty;
+            newAccount.Grades = string.Empty;
+
         }
 
 

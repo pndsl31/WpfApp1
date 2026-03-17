@@ -89,11 +89,6 @@
         <TextBox HorizontalAlignment="Left" Margin="328,91,0,0" Grid.Row="2" TextWrapping="Wrap" Text="MAIN DASHBOARD" VerticalAlignment="Top" Width="120"/>
         <TextBlock Text="{Binding _CurrentUser.Username, StringFormat='Welcome to the main Home Page, {0}'}" HorizontalAlignment="Center" Margin="0,200,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White"/>
 
-        <Grid Grid.Row="2" Grid.Column="0" >
-            <DataGrid ItemsSource="{Binding table1List}" 
-                      AutoGenerateColumns="True" 
-                      CanUserAddRows="False" 
-                      AlternatingRowBackground="LightGray" Margin="406,144,42,38" />
-        </Grid>
+        
     </Grid>
 </Window>
