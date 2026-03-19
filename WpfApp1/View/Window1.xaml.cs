@@ -30,9 +30,7 @@ namespace WpfApp1.View
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            View.GradesWindow gradesWindow = new View.GradesWindow(_CurrentUser);
-            gradesWindow.Show();
-            this.Close();
+
         }
         private void LogoutWindow_Dashboard_Click(object sender, RoutedEventArgs e)
         {
