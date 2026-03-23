@@ -24,9 +24,6 @@ namespace WpfApp1.View
         }
 
 
-        private void LogInButton_LOGINPAGE_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
 }

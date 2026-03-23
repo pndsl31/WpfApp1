@@ -38,7 +38,7 @@ namespace WpfApp1.ViewModel
             {
 
                 var loginWindow = new Window1(CurrentUser);
-                loginWindow.DataContext = new GradesWindowVM(CurrentUser);
+                //loginWindow.DataContext = new Window1(CurrentUser);
                 loginWindow.Show();
                 Application.Current.MainWindow.Close();
             }

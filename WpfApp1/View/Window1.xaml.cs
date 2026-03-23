@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfApp1.Model;
+using WpfApp1.ViewModel;
 
 namespace WpfApp1.View
 {
@@ -25,40 +26,7 @@ namespace WpfApp1.View
         {
             _CurrentUser = CurrentUser;
             InitializeComponent();
-        }
-
-
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void LogoutWindow_Dashboard_Click(object sender, RoutedEventArgs e)
-        {
-            View.MainWindow mainWindow = new View.MainWindow();
-            mainWindow.Show();
-            this.Close();
-        }
-
-        private void ProfileWindow_Click(object sender, RoutedEventArgs e)
-        {
-            View.ProfileWindow profileWindow = new View.ProfileWindow(_CurrentUser);
-            profileWindow.Show();
-            this.Close();
-        }
-
-        private void GradesWindow_Click(object sender, RoutedEventArgs e)
-        {
-            View.GradesWindow gradesWindow = new View.GradesWindow(_CurrentUser);
-            gradesWindow.DataContext = new ViewModel.GradesWindowVM(_CurrentUser) ;
-            gradesWindow.Show();
-            this.Close();
-        }
-
-        private void SubjectsWindow_Click(object sender, RoutedEventArgs e)
-        {
-            View.SubjectsWindow subjectsWindow = new View.SubjectsWindow(_CurrentUser);
-            subjectsWindow.Show();
-            this.Close();
+            DataContext = new MainViewModel(CurrentUser, this);
         }
     }
 }

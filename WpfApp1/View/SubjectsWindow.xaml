@@ -41,7 +41,7 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
                 BorderBrush="{x:Null}"
-                Click="HomeButton_Click"
+               
                 Width="40" 
                 Height="40">
                     <Button.Content>
@@ -63,28 +63,28 @@
                     <MenuItem x:Name="SubjectsWindow1" Header="Subjects"
                       Foreground="White"
                       FontWeight="Bold"
-                      FontSize="12" Click="SubjectsWindow_Click"/>
+                      FontSize="12" />
                 </Menu>
 
                 <Menu Grid.Column="4" HorizontalAlignment="Center" Background="{x:Null}">
                     <MenuItem x:Name="GradesWindow" Header="Grades"
                       Foreground="White"
                       FontWeight="Bold"
-                      FontSize="12" Click="GradesWindow_Click"/>
+                      FontSize="12" />
                 </Menu>
 
                 <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
                     <MenuItem x:Name="ProfileWindow" Header="Profile"
                       Foreground="White"
                       FontWeight="Bold"
-                      FontSize="12" Click="ProfileWindow_Click"/>
+                      FontSize="12" />
                 </Menu>
 
                 <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
                     <MenuItem x:Name="LogoutWindow_Dashboard" Header="Logout"
                       Foreground="White"
                       FontWeight="Bold"
-                      FontSize="12" Click="LogoutWindow_Dashboard_Click"/>
+                      FontSize="12" />
                 </Menu>
 
             </Grid>

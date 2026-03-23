@@ -41,7 +41,7 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
                 BorderBrush="{x:Null}"
-                Click="HomeButton_Click"
+                
                 Width="40" 
                 Height="40">
                     <Button.Content>
@@ -63,28 +63,28 @@
                     <MenuItem x:Name="SubjectsWindow" Header="Subjects"
                       Foreground="White"
                       FontWeight="Bold"
-                      FontSize="12" Click="SubjectsWindow_Click"/>
+                      FontSize="12" />
                 </Menu>
 
                 <Menu Grid.Column="4" HorizontalAlignment="Center" Background="{x:Null}">
                     <MenuItem x:Name="GradesWindow1" Header="Grades"
                         Foreground="White"
                         FontWeight="Bold"
-                        FontSize="12" Click="GradesWindow_Click"/>
+                        FontSize="12" />
                 </Menu>
 
                 <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
                     <MenuItem x:Name="ProfileWindow1" Header="Profile"
                       Foreground="White"
                       FontWeight="Bold"
-                      FontSize="12" Click="ProfileWindow_Click"/>
+                      FontSize="12" />
                 </Menu>
 
                 <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
                     <MenuItem x:Name="LogoutWindow_Dashboard" Header="Logout"
                         Foreground="White"
                         FontWeight="Bold"
-                        FontSize="12" Click="LogoutWindow_Dashboard_Click"/>
+                        FontSize="12" />
                 </Menu>
 
             </Grid>
@@ -92,9 +92,13 @@
             <Grid Grid.Row="2" Grid.Column="0" >
                 <DataGrid ItemsSource="{Binding table1List}" 
                           SelectedItem="{Binding SelectedItem}"
-                      AutoGenerateColumns="True" 
-                      CanUserAddRows="False" 
-                      AlternatingRowBackground="LightGray" Margin="53,82,129,56" BorderBrush="#FFAC41CB" Background="White" Foreground="black" SelectionChanged="DataGrid_SelectionChanged" 
+                          AutoGenerateColumns="True" 
+                          CanUserAddRows="False"                     
+                          AlternatingRowBackground="LightGray" 
+                          Margin="53,82,129,56" 
+                          BorderBrush="#FFAC41CB" 
+                          Background="White" 
+                          Foreground="black"  
                           />
             </Grid>
             <Rectangle Grid.Column="1" HorizontalAlignment="Center" Height="257" Margin="0,79,0,0" Grid.Row="2" Stroke="Black" VerticalAlignment="Top" Width="161" Fill="#FF110C57"/>

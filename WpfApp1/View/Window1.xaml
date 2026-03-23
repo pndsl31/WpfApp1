@@ -41,11 +41,12 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     BorderBrush="{x:Null}"
-                    Click="HomeButton_Click"
+                    Command="{Binding GoToMainDashboardCommand}"
                     Width="40" 
                     Height="40">
                 <Button.Content>
-                    <Image x:Name="HOME_PAGE_BUTTON" Source="../Images/P-removebg-preview.png" 
+                    <Image x:Name="HOME_PAGE_BUTTON" 
+                           Source="../Images/P-removebg-preview.png" 
                            Width="30" 
                            Height="30"/>
                 </Button.Content>
@@ -57,38 +58,65 @@
             </Button>
 
 
-            <Menu Grid.Column="3" HorizontalAlignment="Center" Background="{x:Null}">
-                <MenuItem x:Name="SubjectsWindow" Header="Subjects"
-                  Foreground="White"
-                  FontWeight="Bold"
-                  FontSize="12" Click="SubjectsWindow_Click"/>
+            <Menu Grid.Column="3" 
+                  HorizontalAlignment="Center" 
+                  Background="{x:Null}">
+                <MenuItem x:Name="SubjectsWindow" 
+                          Header="Subjects"
+                          Foreground="White"
+                          FontWeight="Bold"
+                          FontSize="12" 
+                          Command="{Binding GoToSubjectsCommand}"/>
             </Menu>
 
-            <Menu Grid.Column="4" HorizontalAlignment="Center" Background="{x:Null}">
-                <MenuItem x:Name="GradesWindow" Header="Grades"
-                  Foreground="White"
-                  FontWeight="Bold"
-                  FontSize="12" Click="GradesWindow_Click"/>
+            <Menu Grid.Column="4" 
+                  HorizontalAlignment="Center" 
+                  Background="{x:Null}">
+                <MenuItem x:Name="GradesWindow" 
+                          Header="Grades"
+                          Foreground="White"
+                          FontWeight="Bold"
+                          FontSize="12" 
+                          Command="{Binding GoToGradesCommand}"/>
             </Menu>
 
             <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
                 <MenuItem x:Name="ProfileWindow" Header="Profile"
-                  Foreground="White"
-                  FontWeight="Bold"
-                  FontSize="12" Click="ProfileWindow_Click"/>
+                          Foreground="White"
+                          FontWeight="Bold"
+                          FontSize="12"
+                          Command="{Binding GoToProfileCommand}"/>
             </Menu>
 
             <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
-                <MenuItem x:Name="LogoutWindow_Dashboard" Header="Logout"
-                  Foreground="White"
-                  FontWeight="Bold"
-                  FontSize="12" Click="LogoutWindow_Dashboard_Click"/>
+                <MenuItem x:Name="LogoutWindow_Dashboard" 
+                          Header="Logout"
+                          Foreground="White"
+                          FontWeight="Bold"
+                          FontSize="12" 
+                          Command="{Binding LogoutCommand}"/>
             </Menu>
 
         </Grid>
         <TextBox HorizontalAlignment="Left" Margin="328,91,0,0" Grid.Row="2" TextWrapping="Wrap" Text="MAIN DASHBOARD" VerticalAlignment="Top" Width="120"/>
-        <TextBlock Text="{Binding _CurrentUser.Username, StringFormat='Welcome to the main Home Page, {0}'}" HorizontalAlignment="Center" Margin="0,200,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White"/>
+        <TextBlock 
+            Text="{Binding CurrentUser.Username, StringFormat='Welcome to the main Home Page, {0}'}"
+            HorizontalAlignment="Left"
+            Margin="37,20,0,0"
+            Grid.Row="2"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Foreground="White" RenderTransformOrigin="0.5,0.5" Width="531" Height="66" FontFamily="Verdana" FontSize="22" FontWeight="Bold">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
 
-        
+
     </Grid>
 </Window>

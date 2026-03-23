@@ -27,6 +27,7 @@ namespace WpfApp1.ViewModel
 
         public GradesWindowVM(UserModel CurrentUser)
         {
+
             _CurrentUser = CurrentUser;
             table1List = new ObservableCollection<table1>()
             {

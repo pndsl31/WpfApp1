@@ -33,7 +33,7 @@
 
                 <Button x:Name="LogInButton_LOGINPAGE" Content="Log in" Height="27" 
                 Width="72" FontSize="15" BorderBrush="White" Foreground="#FF1E1369" 
-                Background="#FFF1F0F5" FontWeight="Bold" Command= "{Binding LoginCommand}" CommandParameter="{Binding ElementName = PasswordTextBox}" Click="LogInButton_LOGINPAGE_Click"/>
+                Background="#FFF1F0F5" FontWeight="Bold" Command= "{Binding LoginCommand}" CommandParameter="{Binding ElementName = PasswordTextBox}"/>
 
             </StackPanel>
         </Grid>

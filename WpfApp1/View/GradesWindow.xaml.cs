@@ -15,38 +15,9 @@ namespace WpfApp1.View
         {
             CurrentUser = _CurrentUser;
             InitializeComponent();
+            DataContext = new MainViewModel(_CurrentUser, this);
         }
 
       
-
-        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SubjectsWindow_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void GradesWindow_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ProfileWindow_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void LogoutWindow_Dashboard_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
