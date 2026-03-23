@@ -40,7 +40,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     BorderBrush="{x:Null}"
-                    
+                    Command="{Binding GoToMainDashboardCommand}"
                     Width="40" 
                     Height="40">
                 <Button.Content>
@@ -56,33 +56,44 @@
                 </Button.Template>
             </Button>
 
-            <Menu Grid.Column="3" HorizontalAlignment="Center" Background="{x:Null}">
-                <MenuItem x:Name="SubjectsMenu" Header="Subjects"
+
+            <Menu Grid.Column="3" 
+                  HorizontalAlignment="Center" 
+                  Background="{x:Null}">
+                <MenuItem x:Name="SubjectsMenu" 
+                          Header="Subjects"
                           Foreground="White"
                           FontWeight="Bold"
-                          FontSize="12" />
+                          FontSize="12" 
+                          Command="{Binding GoToSubjectsCommand}"/>
             </Menu>
 
-            <Menu Grid.Column="4" HorizontalAlignment="Center" Background="{x:Null}">
-                <MenuItem x:Name="GradesMenu" Header="Grades"
+            <Menu Grid.Column="4" 
+                  HorizontalAlignment="Center" 
+                  Background="{x:Null}">
+                <MenuItem x:Name="GradesMenu" 
+                          Header="Grades"
                           Foreground="White"
                           FontWeight="Bold"
-                          FontSize="12" />
+                          FontSize="12" 
+                          Command="{Binding GoToGradesCommand}"/>
             </Menu>
-
 
             <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
                 <MenuItem x:Name="ProfileMenu" Header="Profile"
                           Foreground="White"
                           FontWeight="Bold"
-                          FontSize="12" />
+                          FontSize="12"
+                          />
             </Menu>
 
             <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
-                <MenuItem x:Name="LogoutMenu" Header="Logout"
+                <MenuItem x:Name="LogoutWindow_Dashboard" 
+                          Header="Logout"
                           Foreground="White"
                           FontWeight="Bold"
-                          FontSize="12" />
+                          FontSize="12" 
+                          Command="{Binding LogoutCommand}"/>
             </Menu>
         </Grid>
 

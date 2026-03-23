@@ -36,55 +36,58 @@
                     <ColumnDefinition Width="90"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="HomeButton" 
-                Grid.Column="0" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
-                BorderBrush="{x:Null}"
-               
-                Width="40" 
-                Height="40">
-                    <Button.Content>
-                        <Image x:Name="HOME_PAGE_BUTTON" Source="../Images/P-removebg-preview.png" 
-                       Width="30" 
-                       Height="30"/>
-                    </Button.Content>
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <ContentPresenter/>
-                        </ControlTemplate>
-                    </Button.Template>
+                <Button x:Name="HomeButton"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        BorderBrush="{x:Null}"
+                        Background="Transparent"
+                        Command="{Binding GotoMainDashBoardCommand}"
+                        Width="40"
+                        Height="40">
+                    <Image Source="../Images/P-removebg-preview.png" 
+                           Width="30"
+                           Height="30"/>
                 </Button>
 
 
-
-
-                <Menu Grid.Column="3" HorizontalAlignment="Center" Background="{x:Null}">
-                    <MenuItem x:Name="SubjectsWindow1" Header="Subjects"
-                      Foreground="White"
-                      FontWeight="Bold"
-                      FontSize="12" />
+                <Menu Grid.Column="3" 
+                  HorizontalAlignment="Center" 
+                  Background="{x:Null}">
+                    <MenuItem x:Name="SubjectsMenu" 
+                          Header="Subjects"
+                          Foreground="White"
+                          FontWeight="Bold"
+                          FontSize="12" 
+                          />
                 </Menu>
 
-                <Menu Grid.Column="4" HorizontalAlignment="Center" Background="{x:Null}">
-                    <MenuItem x:Name="GradesWindow" Header="Grades"
-                      Foreground="White"
-                      FontWeight="Bold"
-                      FontSize="12" />
+                <Menu Grid.Column="4" 
+                  HorizontalAlignment="Center" 
+                  Background="{x:Null}">
+                    <MenuItem x:Name="GradesWindow" 
+                          Header="Grades"
+                          Foreground="White"
+                          FontWeight="Bold"
+                          FontSize="12" 
+                          Command="{Binding GoToGradesCommand}"/>
                 </Menu>
 
                 <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
                     <MenuItem x:Name="ProfileWindow" Header="Profile"
-                      Foreground="White"
-                      FontWeight="Bold"
-                      FontSize="12" />
+                          Foreground="White"
+                          FontWeight="Bold"
+                          FontSize="12"
+                          Command="{Binding GoToProfileCommand}"/>
                 </Menu>
 
                 <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
-                    <MenuItem x:Name="LogoutWindow_Dashboard" Header="Logout"
-                      Foreground="White"
-                      FontWeight="Bold"
-                      FontSize="12" />
+                    <MenuItem x:Name="LogoutWindow_Dashboard" 
+                          Header="Logout"
+                          Foreground="White"
+                          FontWeight="Bold"
+                          FontSize="12" 
+                          Command="{Binding LogoutCommand}"/>
                 </Menu>
 
             </Grid>

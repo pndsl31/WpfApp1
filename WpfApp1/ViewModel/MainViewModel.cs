@@ -59,18 +59,18 @@ namespace WpfApp1.ViewModel
             _currentWindow.Close();
         }
 
-        public void Logout(object? parameter)
+        public void GoToMainDashboard(object? parameter)
         {
-            var win = new MainWindow();
+            var win = new Window1(CurrentUser);
+            //win.DataContext = new Window1(CurrentUser);
             win.Show();
 
             _currentWindow.Close();
         }
 
-        public void GoToMainDashboard(object? parameter)
+        public void Logout(object? parameter)
         {
-            var win = new Window1(CurrentUser);
-            //win.DataContext = new Window1(CurrentUser);
+            var win = new MainWindow();
             win.Show();
 
             _currentWindow.Close();
