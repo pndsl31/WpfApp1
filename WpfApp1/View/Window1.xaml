@@ -41,7 +41,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     BorderBrush="{x:Null}"
-                    Command="{Binding GoToMainDashboardCommand}"
+                    Command="{Binding Navigation.GoToMainDashboardCommand}"
                     Width="40" 
                     Height="40">
                 <Button.Content>
@@ -67,7 +67,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding GoToSubjectsCommand}" FontFamily="Century Gothic"/>
+                          Command="{Binding Navigation.GoToSubjectsCommand}" FontFamily="Century Gothic"/>
             </Menu>
 
             <Menu Grid.Column="4" 
@@ -79,7 +79,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding GoToGradesCommand}"/>
+                          Command="{Binding Navigation.GoToGradesCommand}"/>
             </Menu>
 
             <Menu Grid.Column="5" 
@@ -90,7 +90,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12"
-                          Command="{Binding GoToProfileCommand}"/>
+                          Command="{Binding Navigation.GoToProfileCommand}"/>
             </Menu>
 
             <Menu Grid.Column="6" 
@@ -102,7 +102,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding LogoutCommand}"/>
+                          Command="{Binding Navigation.LogoutCommand}"/>
             </Menu>
 
         </Grid>
@@ -145,7 +145,7 @@
 
         </StackPanel>
         <TextBlock 
-            Text="{Binding CurrentUser.Username, StringFormat='Welcome to the main Home Page, {0}'}"
+            Text="{Binding WelcomeMessage}"
             HorizontalAlignment="Left"
             Margin="37,20,0,0"
             Grid.Row="2"

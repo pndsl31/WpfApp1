@@ -15,14 +15,10 @@ namespace WpfApp1.ViewModel
         // var newViewModel = new HomePageViewModel(CurrentUser);
         public ObservableCollection<table1> table1List { get; set; }
         public UserModel _CurrentUser { get; set; }
-
         public ICommand SaveCommand { get; set; }
-
         public ICommand DeleteCommand { get; set; }
-
         public ICommand ClearCommand { get; set; }
         public MainViewModel Navigation {  get; set; }
-
         public table1 newAccount { get; set; }
         public string WelcomeMessage { get; set; }
 
@@ -86,7 +82,6 @@ namespace WpfApp1.ViewModel
                     newAccount.DateReported = SelectedItem.DateReported;
                     newAccount.IsComplete = SelectedItem.IsComplete;
                 }
-
             }
         }
 
