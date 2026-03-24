@@ -21,21 +21,23 @@ namespace WpfApp1.ViewModel
         public ICommand DeleteCommand { get; set; }
 
         public ICommand ClearCommand { get; set; }
-
+        public MainViewModel Navigation {  get; set; }
 
         public table1 newAccount { get; set; }
+        public string WelcomeMessage { get; set; }
 
-        public GradesWindowVM(UserModel CurrentUser)
+        public GradesWindowVM(UserModel currentUser, Window currentWindow)
         {
-
-            _CurrentUser = CurrentUser;
+            Navigation = new MainViewModel(currentUser, currentWindow);
+            _CurrentUser = currentUser;
+            WelcomeMessage = $"Welcome to the Grades Dashboard, {currentUser.Username}";
             table1List = new ObservableCollection<table1>()
             {
-                new table1 { ID = " 01", Subject = "Math", Grades = "100", DateReported = new DateTime(2024, 5, 10), IsComplete = true },
-                new table1 { ID = " 02", Subject = "Science", Grades = "99", DateReported = new DateTime(2024, 5, 12), IsComplete = true },
-                new table1 { ID = " 03", Subject = "English", Grades = "98", DateReported = new DateTime(2024, 5, 15), IsComplete = true },
+                new table1 { ID = " 01", Subject = "Database", Grades = "100", DateReported = new DateTime(2024, 5, 10), IsComplete = true },
+                new table1 { ID = " 02", Subject = "Networking", Grades = "99", DateReported = new DateTime(2024, 5, 12), IsComplete = true },
+                new table1 { ID = " 03", Subject = "Event Driven Programming", Grades = "98", DateReported = new DateTime(2024, 5, 15), IsComplete = true },
                 new table1 { ID = " 04", Subject = "History", Grades = "97", DateReported = new DateTime(2024, 5, 18), IsComplete = true },
-                new table1 { ID = " 05", Subject = "MAPEH", Grades = "96", DateReported = new DateTime(2024, 5, 20), IsComplete = true }
+                new table1 { ID = " 05", Subject = "Integrative Programming", Grades = "96", DateReported = new DateTime(2024, 5, 20), IsComplete = true }
             };
             newAccount = new table1();
 
@@ -100,7 +102,5 @@ namespace WpfApp1.ViewModel
             newAccount.Grades = string.Empty;
 
         }
-
-
     }
 }

@@ -11,13 +11,12 @@ namespace WpfApp1.View
     public partial class GradesWindow : Window
     {
         public UserModel CurrentUser { get; set; }
+
         public GradesWindow(UserModel _CurrentUser)
         {
             CurrentUser = _CurrentUser;
             InitializeComponent();
-            DataContext = new MainViewModel(_CurrentUser, this);
+            DataContext = new GradesWindowVM(_CurrentUser, this);
         }
-
-      
     }
 }

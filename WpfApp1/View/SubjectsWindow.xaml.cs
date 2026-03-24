@@ -11,9 +11,7 @@ namespace WpfApp1.View
         {
             InitializeComponent();
             CurrentUser = _CurrentUser;
-            DataContext = new MainViewModel(_CurrentUser, this);
+            DataContext = new SubjectsViewModel(_CurrentUser, this);
         }
-
-
     }
 }

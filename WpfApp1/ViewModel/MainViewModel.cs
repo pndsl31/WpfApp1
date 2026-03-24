@@ -12,23 +12,30 @@ namespace WpfApp1.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
+        private Window _currentWindow;
+        public string WelcomeMessage { get; set; }
+        public int TotalSubjects { get; set; }
+        public string AverageGrade { get; set; }
         public UserModel CurrentUser { get; set; }
-
         public ICommand GoToGradesCommand { get; set; }
         public ICommand GoToSubjectsCommand { get; set; }
         public ICommand GoToProfileCommand { get; set; }
-        public ICommand GotoMainDashboardCommand { get; set; }
+        public ICommand GoToMainDashboardCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
-        private Window _currentWindow;
+
+
 
         public MainViewModel(UserModel user, Window currentWindow)
         {
             CurrentUser = user;
             _currentWindow = currentWindow;
+            WelcomeMessage = $"Welcome to the Main Dashboard, {CurrentUser.Username}";
+            TotalSubjects = 5;
+            AverageGrade = "98.0";
             GoToGradesCommand = new RelayCommand(GoToGrades);
             GoToSubjectsCommand = new RelayCommand(GoToSubjects);
             GoToProfileCommand = new RelayCommand(GoToProfile);
-            GotoMainDashboardCommand = new RelayCommand(GoToMainDashboard);
+            GoToMainDashboardCommand = new RelayCommand(GoToMainDashboard);
             LogoutCommand = new RelayCommand(Logout);
         }
 

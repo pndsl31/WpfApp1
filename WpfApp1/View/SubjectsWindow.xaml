@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="SubjectsWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" >
+        Title="SubjectsWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen" >
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="29*"/>
             </Grid.ColumnDefinitions>
             <Grid.Background>
-                <ImageBrush ImageSource="../Images/purple-aesthetic-3840x2160-17734.jpg"/>
+                <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
             </Grid.Background>
 
             <Grid.RowDefinitions>
@@ -36,18 +36,25 @@
                     <ColumnDefinition Width="90"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="HomeButton"
-                        Grid.Column="0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        BorderBrush="{x:Null}"
-                        Background="Transparent"
-                        Command="{Binding GotoMainDashBoardCommand}"
-                        Width="40"
-                        Height="40">
-                    <Image Source="../Images/P-removebg-preview.png" 
-                           Width="30"
+                <Button x:Name="HomeButton" 
+                    Grid.Column="0" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    BorderBrush="{x:Null}"
+                    Command="{Binding Navigation.GoToMainDashboardCommand}"
+                    Width="40" 
+                    Height="40">
+                    <Button.Content>
+                        <Image x:Name="HOME_PAGE_BUTTON" 
+                           Source="../Images/P-removebg-preview.png" 
+                           Width="30" 
                            Height="30"/>
+                    </Button.Content>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter/>
+                        </ControlTemplate>
+                    </Button.Template>
                 </Button>
 
 
@@ -70,7 +77,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding GoToGradesCommand}"/>
+                          Command="{Binding Navigation.GoToGradesCommand}"/>
                 </Menu>
 
                 <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
@@ -78,7 +85,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12"
-                          Command="{Binding GoToProfileCommand}"/>
+                          Command="{Binding Navigation.GoToProfileCommand}"/>
                 </Menu>
 
                 <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
@@ -87,11 +94,43 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding LogoutCommand}"/>
+                          Command="{Binding Navigation.LogoutCommand}"/>
                 </Menu>
 
             </Grid>
-            <TextBox HorizontalAlignment="Left" Margin="383,159,0,0" Grid.Row="2" TextWrapping="Wrap" Text="SUBJECTS DASHBOARD" VerticalAlignment="Top" Width="120" />
+            <DataGrid Grid.Row="2"
+                      ItemsSource="{Binding SubjectList}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"                  
+                      AlternatingRowBackground="#22FFFFFF"                  
+                      Background="Transparent"                 
+                      Foreground="White"                  
+                      BorderBrush="#FFAC41CB"                  
+                      Margin="37,60,27,46"                 
+                      RowBackground="Transparent"      
+                      GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Subject"  Binding="{Binding Name}"     Width="*"/>
+                    <DataGridTextColumn Header="Schedule" Binding="{Binding Schedule}" Width="200"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock 
+            Text="{Binding WelcomeMessage}"
+            HorizontalAlignment="Left"
+            Grid.Row="2"
+            Margin="37,20,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Foreground="White" RenderTransformOrigin="0.5,0.5" Width="706" Height="66" FontFamily="Verdana" FontSize="22" FontWeight="Bold">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
         </Grid>
     </Grid>
 </Window>

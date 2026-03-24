@@ -11,10 +11,7 @@ namespace WpfApp1.View
         {
             CurrentUser = _CurrentUser;
             InitializeComponent();
-            DataContext = new MainViewModel(_CurrentUser, this);
+            DataContext = new ProfileViewModel(_CurrentUser, this);
         }
-
-
-
     }
 }

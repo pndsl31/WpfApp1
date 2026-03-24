@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Window1" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="131*"/>
-            <ColumnDefinition Width="29*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="../Images/purple-aesthetic-3840x2160-17734.jpg"/>
+            <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
         </Grid.Background>
 
         <Grid.RowDefinitions>
@@ -59,7 +59,8 @@
 
 
             <Menu Grid.Column="3" 
-                  HorizontalAlignment="Center" 
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
                   Background="{x:Null}">
                 <MenuItem x:Name="SubjectsWindow" 
                           Header="Subjects"
@@ -71,6 +72,7 @@
 
             <Menu Grid.Column="4" 
                   HorizontalAlignment="Center" 
+                  VerticalAlignment="Center"
                   Background="{x:Null}">
                 <MenuItem x:Name="GradesWindow" 
                           Header="Grades"
@@ -80,7 +82,10 @@
                           Command="{Binding GoToGradesCommand}"/>
             </Menu>
 
-            <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
+            <Menu Grid.Column="5" 
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Background="{x:Null}">
                 <MenuItem x:Name="ProfileWindow" Header="Profile"
                           Foreground="White"
                           FontWeight="Bold"
@@ -88,7 +93,10 @@
                           Command="{Binding GoToProfileCommand}"/>
             </Menu>
 
-            <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
+            <Menu Grid.Column="6" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center"
+                  Background="{x:Null}">
                 <MenuItem x:Name="LogoutWindow_Dashboard" 
                           Header="Logout"
                           Foreground="White"
@@ -98,7 +106,44 @@
             </Menu>
 
         </Grid>
-        <TextBox HorizontalAlignment="Left" Margin="328,91,0,0" Grid.Row="2" TextWrapping="Wrap" Text="MAIN DASHBOARD" VerticalAlignment="Top" Width="120"/>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+
+            <Border Background="#FF110C57" CornerRadius="10" Padding="30,20" Margin="20">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Total Subjects"
+                       Foreground="White"
+                       FontFamily="Century Gothic"
+                       FontSize="14"
+                       HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding TotalSubjects}"
+                       Foreground="White"
+                       FontFamily="Century Gothic"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#FF110C57" CornerRadius="10" Padding="30,20" Margin="20">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Average Grade"
+                       Foreground="White"
+                       FontFamily="Century Gothic"
+                       FontSize="14"
+                       HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding AverageGrade}"
+                       Foreground="White"
+                       FontFamily="Century Gothic"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
         <TextBlock 
             Text="{Binding CurrentUser.Username, StringFormat='Welcome to the main Home Page, {0}'}"
             HorizontalAlignment="Left"
@@ -106,7 +151,7 @@
             Grid.Row="2"
             TextWrapping="Wrap"
             VerticalAlignment="Top"
-            Foreground="White" RenderTransformOrigin="0.5,0.5" Width="531" Height="66" FontFamily="Verdana" FontSize="22" FontWeight="Bold">
+            Foreground="White" RenderTransformOrigin="0.5,0.5" Width="496" Height="66" FontFamily="Verdana" FontSize="22" FontWeight="Bold">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="1"/>

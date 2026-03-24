@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
     <Window.Background>
-        <ImageBrush ImageSource="../Images/purple-aesthetic-3840x2160-17734.jpg"/>
+        <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
     </Window.Background>
 
     <Viewbox Stretch= "Uniform">
         <Grid Height="350">
             <StackPanel>
                 <Image x:Name="LoginLogo" Source="../Images/P-removebg-preview.png" Height="116" Width="253"/>
-                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Poodle" VerticalAlignment="Top"  FontSize="50 " FontFamily="Bahnschrift SemiBold" FontStyle="Italic" FontWeight="UltraBold">
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Poodle"  FontSize="50 " FontFamily="Cascadia Code SemiBold" FontStyle="Italic" FontWeight="UltraBold" Height="58" Width="177">
                     <TextBlock.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="White"/>
@@ -22,18 +22,16 @@
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
+                <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"  FontSize="18"  Foreground="White" FontFamily="Lucida Console"/>
                 <TextBox x:Name="UsernameTextBox"  TextWrapping="NoWrap" Text="{Binding CurrentUser.Username,UpdateSourceTrigger=PropertyChanged}" Height="25" FontSize="20" FontFamily="OCR A Extended" />
-                <TextBlock TextWrapping="Wrap" Text="Password:"  FontSize="25"  Foreground="White" FontFamily="OCR A Extended"/>
+                <TextBlock TextWrapping="Wrap" Text="Password:"  Foreground="White" FontFamily="Lucida Console" FontSize="18"/>
                 <PasswordBox x:Name="PasswordTextBox"
                 Height="25"
                 FontSize="20"
                 FontFamily="OCR A Extended"/>
-
-
                 <Button x:Name="LogInButton_LOGINPAGE" Content="Log in" Height="27" 
                 Width="72" FontSize="15" BorderBrush="White" Foreground="#FF1E1369" 
-                Background="#FFF1F0F5" FontWeight="Bold" Command= "{Binding LoginCommand}" CommandParameter="{Binding ElementName = PasswordTextBox}"/>
+                Background="#FFF1F0F5" FontWeight="Bold" Command= "{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordTextBox}"/>
 
             </StackPanel>
         </Grid>

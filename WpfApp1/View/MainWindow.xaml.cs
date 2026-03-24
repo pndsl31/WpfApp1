@@ -22,8 +22,5 @@ namespace WpfApp1.View
             InitializeComponent();
             this.DataContext = new ViewModel.LoginViewModel();
         }
-
-
-
     }
 }

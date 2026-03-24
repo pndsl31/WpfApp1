@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="ProfileWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="ProfileWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.Background>
-            <ImageBrush ImageSource="../Images/purple-aesthetic-3840x2160-17734.jpg"/>
+            <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
         </Grid.Background>
 
         <Grid.RowDefinitions>
@@ -40,7 +40,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     BorderBrush="{x:Null}"
-                    Command="{Binding GoToMainDashboardCommand}"
+                    Command="{Binding Navigation.GoToMainDashboardCommand}"
                     Width="40" 
                     Height="40">
                 <Button.Content>
@@ -65,7 +65,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding GoToSubjectsCommand}"/>
+                          Command="{Binding Navigation.GoToSubjectsCommand}"/>
             </Menu>
 
             <Menu Grid.Column="4" 
@@ -76,7 +76,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding GoToGradesCommand}"/>
+                          Command="{Binding Navigation.GoToGradesCommand}"/>
             </Menu>
 
             <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
@@ -93,11 +93,71 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding LogoutCommand}"/>
+                          Command="{Binding Navigation.LogoutCommand}"/>
             </Menu>
         </Grid>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Width="450">
 
-        <TextBox HorizontalAlignment="Left" Margin="328,170,0,0" Grid.Row="2" 
-                 TextWrapping="Wrap" Text="PROFILE DASHBOARD" VerticalAlignment="Top" Width="173"/>
+            <Border Width="80" Height="80"
+            CornerRadius="40"
+            Background="#FF110C57"
+            HorizontalAlignment="Center"
+            Margin="0,0,0,15">
+                <TextBlock Text="👤"
+                   FontSize="40"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+            </Border>
+
+            <Border Background="#CC110C57" CornerRadius="10" Padding="30">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Username:"    Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Text="Student ID:"  Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="2" Text="Course:"      Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="3" Text="Year/Section:" Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="4" Text="Email:"       Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentUser.Username}" Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding StudentId}"            Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Course}"               Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding YearSection}"          Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Email}"                Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+        <TextBlock 
+            Text="{Binding WelcomeMessage}"
+            Grid.Row="2"
+            HorizontalAlignment="Left"
+            Margin="37,20,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Foreground="White" RenderTransformOrigin="0.5,0.5" Width="693" Height="66" FontFamily="Verdana" FontSize="22" FontWeight="Bold">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        
     </Grid>
 </Window>
