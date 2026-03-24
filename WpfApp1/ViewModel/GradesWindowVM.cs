@@ -12,7 +12,6 @@ namespace WpfApp1.ViewModel
 {
     internal class GradesWindowVM : ObservableObject
     {
-        // var newViewModel = new HomePageViewModel(CurrentUser);
         public ObservableCollection<table1> table1List { get; set; }
         public UserModel _CurrentUser { get; set; }
         public ICommand SaveCommand { get; set; }
