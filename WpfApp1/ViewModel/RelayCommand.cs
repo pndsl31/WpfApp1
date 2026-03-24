@@ -17,7 +17,6 @@ namespace WpfApp1.ViewModel
 
         public void Execute(object? parameter) => _execute(parameter);
         
-        //This fix remove sCS0067 warning by linking to the WPF Command Manager
         public event EventHandler? CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }

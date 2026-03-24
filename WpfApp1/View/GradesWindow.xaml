@@ -103,7 +103,7 @@
             <Grid Grid.Row="2" Grid.Column="0" >
                 <DataGrid ItemsSource="{Binding table1List}" 
                           SelectedItem="{Binding SelectedItem}"
-                          AutoGenerateColumns="True" 
+                          AutoGenerateColumns="False" 
                           CanUserAddRows="False"                     
                           AlternatingRowBackground="#22FFFFFF"  
                           RowBackground="Transparent"
@@ -142,7 +142,7 @@
                      VerticalAlignment="Top" Grid.Row="2"/>
 
             <DatePicker x:Name="dpDate"
-                        Text="{Binding newAccount.DateReported}"
+                        SelectedDate="{Binding newAccount.DateReported}"
                         Grid.Column="1"
                         Margin="165,225,69,0"
                         Height="20"

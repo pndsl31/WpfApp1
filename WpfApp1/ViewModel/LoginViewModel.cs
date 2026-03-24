@@ -35,8 +35,7 @@ namespace WpfApp1.ViewModel
                 CurrentUser.Password = password.Password;
             }
             if (CurrentUser.Username.Trim() == "admin" && CurrentUser.Password.Trim() == "1234")
-            {
-
+            { 
                 var loginWindow = new Window1(CurrentUser);
                 //loginWindow.DataContext = new Window1(CurrentUser);
                 loginWindow.Show();

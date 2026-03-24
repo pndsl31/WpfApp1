@@ -29,5 +29,4 @@ namespace WpfApp1.ViewModel
             WelcomeMessage = $"Welcome to the Main Dashboard, {CurrentUser.Username}";
         }
     }
-
 }
