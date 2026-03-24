@@ -126,17 +126,67 @@
                         <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Username:"    Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="1" Text="Student ID:"  Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="2" Text="Course:"      Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="3" Text="Year/Section:" Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="4" Text="Email:"       Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="0" 
+                               Text="Username:"    
+                               Foreground="White" 
+                               FontFamily="Century Gothic" 
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" 
+                               Text="Student ID:"  
+                               Foreground="White"                              
+                               FontFamily="Century Gothic" 
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="2" 
+                               Text="Course:"      
+                               Foreground="White" 
+                               FontFamily="Century Gothic" 
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="3" 
+                               Text="Year/Section:" 
+                               Foreground="White" 
+                               FontFamily="Century Gothic" 
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="4" 
+                               Text="Email:"       
+                               Foreground="White" 
+                               FontFamily="Century Gothic" 
+                               VerticalAlignment="Center"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentUser.Username}" Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding StudentId}"            Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Course}"               Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding YearSection}"          Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Email}"                Foreground="White" FontFamily="Century Gothic" VerticalAlignment="Center"/>
+                    <TextBlock 
+                        Grid.Row="0" 
+                        Grid.Column="1" 
+                        Text="{Binding CurrentUser.Username}" 
+                        Foreground="White" 
+                        FontFamily="Century Gothic" 
+                        VerticalAlignment="Center"/>
+                    <TextBlock 
+                        Grid.Row="1" 
+                        Grid.Column="1" 
+                        Text="{Binding StudentId}"            
+                        Foreground="White" 
+                        FontFamily="Century Gothic" 
+                        VerticalAlignment="Center"/>
+                    <TextBlock 
+                        Grid.Row="2" 
+                        Grid.Column="1" 
+                        Text="{Binding Course}"               
+                        Foreground="White" 
+                        FontFamily="Century Gothic" 
+                        VerticalAlignment="Center"/>
+                    <TextBlock 
+                        Grid.Row="3" 
+                        Grid.Column="1" 
+                        Text="{Binding YearSection}"          
+                        Foreground="White" 
+                        FontFamily="Century Gothic" 
+                        VerticalAlignment="Center"/>
+                    <TextBlock 
+                        Grid.Row="4" 
+                        Grid.Column="1" 
+                        Text="{Binding Email}"                
+                        Foreground="White" 
+                        FontFamily="Century Gothic" 
+                        VerticalAlignment="Center"/>
                 </Grid>
             </Border>
 
@@ -158,6 +208,6 @@
                 </TransformGroup>
             </TextBlock.RenderTransform>
         </TextBlock>
-        
+
     </Grid>
 </Window>

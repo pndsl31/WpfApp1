@@ -110,8 +110,12 @@
                       RowBackground="Transparent"      
                       GridLinesVisibility="None">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Subject"  Binding="{Binding Name}"     Width="*"/>
-                    <DataGridTextColumn Header="Schedule" Binding="{Binding Schedule}" Width="200"/>
+                    <DataGridTextColumn Header="Subject"  
+                                        Binding="{Binding Name}"     
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Schedule" 
+                                        Binding="{Binding Schedule}" 
+                                        Width="200"/>
                 </DataGrid.Columns>
             </DataGrid>
             <TextBlock 

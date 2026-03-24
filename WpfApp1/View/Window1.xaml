@@ -67,7 +67,7 @@
                           Foreground="White"
                           FontWeight="Bold"
                           FontSize="12" 
-                          Command="{Binding GoToSubjectsCommand}"/>
+                          Command="{Binding GoToSubjectsCommand}" FontFamily="Century Gothic"/>
             </Menu>
 
             <Menu Grid.Column="4" 

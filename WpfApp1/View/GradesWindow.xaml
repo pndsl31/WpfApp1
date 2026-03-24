@@ -80,7 +80,9 @@
                           />
                 </Menu>
 
-                <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
+                <Menu Grid.Column="5" 
+                      HorizontalAlignment="Center" 
+                      Background="{x:Null}">
                     <MenuItem x:Name="ProfileWindow" Header="Profile"
                           Foreground="White"
                           FontWeight="Bold"
@@ -146,16 +148,31 @@
                         Height="20"
                         VerticalAlignment="Top" Grid.Row="2"/>
 
-
-
             <Button Content="Add"
                     Command="{Binding SaveCommand}"
                     Grid.Column="1"
                     Margin="70,272,69,161" Grid.Row="2"/>
-            <Button x:Name="deleteButton" Grid.Column="1" 
-                    Content="Delete" HorizontalAlignment="Left" Margin="70,363,0,0" Grid.Row="2" VerticalAlignment="Top" Width="77" Command="{Binding DeleteCommand}" RenderTransformOrigin="0.229,0.882" Height="32"/>
-            <Button x:Name="clearButton" Grid.Column="1" 
-                    Content="Clear" HorizontalAlignment="Left" Margin="165,363,0,0" Grid.Row="2" VerticalAlignment="Top" Width="77" Command="{Binding ClearCommand}" RenderTransformOrigin="0.502,-0.932" Height="32" />
+            <Button x:Name="deleteButton" 
+                    Grid.Column="1" 
+                    Content="Delete" 
+                    HorizontalAlignment="Left" 
+                    Margin="70,363,0,0" 
+                    Grid.Row="2" 
+                    VerticalAlignment="Top" 
+                    Width="77" 
+                    Command="{Binding DeleteCommand}" 
+                    RenderTransformOrigin="0.229,0.882" 
+                    Height="32"/>
+            <Button x:Name="clearButton" 
+                    Grid.Column="1" 
+                    Content="Clear" 
+                    HorizontalAlignment="Left" 
+                    Margin="165,363,0,0" 
+                    Grid.Row="2" 
+                    VerticalAlignment="Top" 
+                    Width="77" 
+                    Command="{Binding ClearCommand}" 
+                    RenderTransformOrigin="0.502,-0.932" Height="32" />
         </Grid>
         <TextBlock 
            Text="{Binding WelcomeMessage}"

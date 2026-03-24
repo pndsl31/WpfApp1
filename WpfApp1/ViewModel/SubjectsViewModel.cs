@@ -30,10 +30,10 @@ namespace WpfApp1.ViewModel
                 new SubjectItem {Name = "Integrative Programming", Schedule = "Fri 3:00-5:00 PM"},
             };
         }
-        public class SubjectItem
-        {
-            public string Name { get; set; } = string.Empty;
-            public string Schedule { get; set; } = string.Empty;
-        }
+        //public class SubjectItem
+        //{
+        //    public string Name { get; set; } = string.Empty;
+        //    public string Schedule { get; set; } = string.Empty;
+        //}
     }
 }
