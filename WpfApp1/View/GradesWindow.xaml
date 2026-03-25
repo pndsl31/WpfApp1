@@ -100,25 +100,24 @@
                 </Menu>
 
             </Grid>
-            <Grid Grid.Row="2" Grid.Column="0" >
-                <DataGrid ItemsSource="{Binding table1List}" 
-                          SelectedItem="{Binding SelectedItem}"
-                          AutoGenerateColumns="False" 
-                          CanUserAddRows="False"                     
+            <DataGrid ItemsSource="{Binding table1List}" 
+                          SelectedItem="{Binding SelectedItem}"                   
                           AlternatingRowBackground="#22FFFFFF"  
                           RowBackground="Transparent"
-                          Margin="60,88,60,87" 
+                          AutoGenerateColumns="True"
+                          CanUserAddRows="False"
+                          Margin="60,88,21,87" 
                           BorderBrush="#FFAC41CB" 
                           Background="{x:Null}" 
-                          Foreground="White"  
-                          />
-            </Grid>
+                          Foreground="White" 
+                          Grid.Row="2" Grid.Column="0"/>
+            
             <Rectangle Grid.Column="1" HorizontalAlignment="Center" Height="333" Margin="0,79,0,0" Grid.Row="2" Stroke="Black" VerticalAlignment="Top" Width="199" Fill="#FF110C57"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" Height="24" Margin="0,93,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Input Grades" VerticalAlignment="Top" Width="144" Foreground="White" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,177,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Foreground="White" FontFamily="Century Gothic"><Run Text="Subject"/><LineBreak/><Run/></TextBlock>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,152,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="18" Foreground="White" FontFamily="Century Gothic"><Run Text="ID"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,201,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Foreground="White" FontFamily="Century Gothic" Text="Grades"/>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,225,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" Foreground="White" FontFamily="Century Gothic" Text="DateReported"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,230,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" Foreground="White" FontFamily="Century Gothic" Text="DateReported"/>
 
             <TextBox x:Name="txtID"
                      Text="{Binding newAccount.ID}"
@@ -145,18 +144,19 @@
                         SelectedDate="{Binding newAccount.DateReported}"
                         Grid.Column="1"
                         Margin="165,225,69,0"
-                        Height="20"
+                        Height="24"
                         VerticalAlignment="Top" Grid.Row="2"/>
 
             <Button Content="Add"
                     Command="{Binding SaveCommand}"
                     Grid.Column="1"
-                    Margin="70,272,69,161" Grid.Row="2"/>
+                    Margin="70,272,69,161" Grid.Row="2"
+                    />
             <Button x:Name="deleteButton" 
                     Grid.Column="1" 
                     Content="Delete" 
                     HorizontalAlignment="Left" 
-                    Margin="70,363,0,0" 
+                    Margin="70,359,0,0" 
                     Grid.Row="2" 
                     VerticalAlignment="Top" 
                     Width="77" 
@@ -167,7 +167,7 @@
                     Grid.Column="1" 
                     Content="Clear" 
                     HorizontalAlignment="Left" 
-                    Margin="165,363,0,0" 
+                    Margin="165,359,0,0" 
                     Grid.Row="2" 
                     VerticalAlignment="Top" 
                     Width="77" 

@@ -99,10 +99,10 @@
 
             </Grid>
             <DataGrid Grid.Row="2"
-                      ItemsSource="{Binding SubjectList}"
+                      ItemsSource="{Binding SubjectList}"               
+                      AlternatingRowBackground="#22FFFFFF"  
                       AutoGenerateColumns="False"
-                      CanUserAddRows="False"                  
-                      AlternatingRowBackground="#22FFFFFF"                  
+                      CanUserAddRows="False"
                       Background="Transparent"                 
                       Foreground="White"                  
                       BorderBrush="#FFAC41CB"                  
