@@ -106,12 +106,21 @@
                           RowBackground="Transparent"
                           AutoGenerateColumns="True"
                           CanUserAddRows="False"
-                          Margin="60,88,21,87" 
+                          Margin="78,53,157,70" 
                           BorderBrush="#FFAC41CB" 
                           Background="{x:Null}" 
-                          Foreground="White" 
-                          Grid.Row="2" Grid.Column="0"/>
-            
+                          ColumnWidth="*"
+                          Foreground="White" Grid.Row="2" RenderTransformOrigin="0.5,0.5">
+                <DataGrid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="-0.231"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="-0.746"/>
+                    </TransformGroup>
+                </DataGrid.RenderTransform>
+            </DataGrid>
+
             <Rectangle Grid.Column="1" HorizontalAlignment="Center" Height="333" Margin="0,79,0,0" Grid.Row="2" Stroke="Black" VerticalAlignment="Top" Width="199" Fill="#FF110C57"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" Height="24" Margin="0,93,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Input Grades" VerticalAlignment="Top" Width="144" Foreground="White" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,177,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Foreground="White" FontFamily="Century Gothic"><Run Text="Subject"/><LineBreak/><Run/></TextBlock>
@@ -150,13 +159,13 @@
             <Button Content="Add"
                     Command="{Binding SaveCommand}"
                     Grid.Column="1"
-                    Margin="70,272,69,161" Grid.Row="2"
+                    Margin="70,272,69,184" Grid.Row="2"
                     />
             <Button x:Name="deleteButton" 
                     Grid.Column="1" 
                     Content="Delete" 
                     HorizontalAlignment="Left" 
-                    Margin="70,359,0,0" 
+                    Margin="70,370,0,0" 
                     Grid.Row="2" 
                     VerticalAlignment="Top" 
                     Width="77" 
@@ -167,12 +176,17 @@
                     Grid.Column="1" 
                     Content="Clear" 
                     HorizontalAlignment="Left" 
-                    Margin="165,359,0,0" 
+                    Margin="165,370,0,0" 
                     Grid.Row="2" 
                     VerticalAlignment="Top" 
                     Width="77" 
                     Command="{Binding ClearCommand}" 
                     RenderTransformOrigin="0.502,-0.932" Height="32" />
+            <Button Content="Update"
+                Command="{Binding UpdateCommand}"
+                Grid.Column="1"
+                Margin="71,320,69,134" Grid.Row="2" 
+                    />
         </Grid>
         <TextBlock 
            Text="{Binding WelcomeMessage}"

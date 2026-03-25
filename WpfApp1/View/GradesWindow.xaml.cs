@@ -18,5 +18,7 @@ namespace WpfApp1.View
             InitializeComponent();
             DataContext = new GradesWindowVM(_CurrentUser, this);
         }
+
+
     }
 }

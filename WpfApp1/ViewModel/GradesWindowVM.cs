@@ -17,6 +17,7 @@ namespace WpfApp1.ViewModel
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand ClearCommand { get; set; }
+        public ICommand UpdateCommand { get; set; }
         public MainViewModel Navigation {  get; set; }
         public table1 newAccount { get; set; }
         public string WelcomeMessage { get; set; }
@@ -40,6 +41,7 @@ namespace WpfApp1.ViewModel
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
             DeleteCommand = new RelayCommand(ExecuteDeleteCommand);
             ClearCommand = new RelayCommand(ExecuteClearCommand);
+            UpdateCommand = new RelayCommand(ExecuteUpdateCommand);
 
         }
         public void ExecuteSaveCommand(object? par)
@@ -95,6 +97,16 @@ namespace WpfApp1.ViewModel
             newAccount.Subject = string.Empty;
             newAccount.Grades = string.Empty;
 
+        }
+        public void ExecuteUpdateCommand(object? par)
+        {
+            _selectedItem.ID = newAccount.ID;
+            _selectedItem.Subject = newAccount.Subject;
+            _selectedItem.Grades = newAccount.Grades;
+            _selectedItem.DateReported = newAccount.DateReported;
+            _selectedItem.IsComplete = newAccount.IsComplete;
+    
+                MessageBox.Show("Success", "Record Updated", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
