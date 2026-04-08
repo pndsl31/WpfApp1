@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp1.View;
+using Microsoft.Data.SqlClient;
 
 namespace WpfApp1.ViewModel
 {
@@ -34,8 +35,56 @@ namespace WpfApp1.ViewModel
             {
                 CurrentUser.Password = password.Password;
             }
-            if (CurrentUser.Username.Trim() == "admin" && CurrentUser.Password.Trim() == "1234")
-            { 
+            //if (CurrentUser.Username.Trim() == "admin" && CurrentUser.Password.Trim() == "1234")
+            //{ 
+            //    var loginWindow = new Window1(CurrentUser);
+            //    //loginWindow.DataContext = new Window1(CurrentUser);
+            //    loginWindow.Show();
+            //    Application.Current.MainWindow.Close();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Invalid username or password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);   
+            //}
+
+            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            bool isLoginValid = false;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    // THE TRADITIONAL (AND DANGEROUS) WAY: String Concatenation
+                    // We are directly pasting whatever the user typed into our database command.
+                    string query = "SELECT * FROM Users WHERE Username = '"
+                        + CurrentUser.Username.Trim()
+                        + "' AND Password = '"
+                        + CurrentUser.Password.Trim() + "'";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                isLoginValid = true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Database connection failed: " + ex.Message);
+                return;
+            }
+
+            if (isLoginValid)
+            {
+                MessageBox.Show("Login Successful! Welcome.", "Success",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 var loginWindow = new Window1(CurrentUser);
                 //loginWindow.DataContext = new Window1(CurrentUser);
                 loginWindow.Show();
@@ -43,7 +92,8 @@ namespace WpfApp1.ViewModel
             }
             else
             {
-                MessageBox.Show("Invalid username or password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);   
+                MessageBox.Show("Invalid Username or Password.", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
