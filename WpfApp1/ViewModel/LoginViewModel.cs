@@ -56,13 +56,12 @@ namespace WpfApp1.ViewModel
                 {
                     // THE TRADITIONAL (AND DANGEROUS) WAY: String Concatenation
                     // We are directly pasting whatever the user typed into our database command.
-                    string query = "SELECT * FROM Users WHERE Username = '"
-                        + CurrentUser.Username.Trim()
-                        + "' AND Password = '"
-                        + CurrentUser.Password.Trim() + "'";
-
+                    string query = "SELECT * FROM Users WHERE Username = @username AND Password = @password";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                        command.Parameters.AddWithValue("@username", CurrentUser.Username);
+                        command.Parameters.AddWithValue("@password", CurrentUser.Password);
+
                         connection.Open();
 
                         using (SqlDataReader reader = command.ExecuteReader())
