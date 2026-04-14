@@ -28,7 +28,7 @@ namespace WpfApp1.ViewModel
 
 
         }
-        private void ExecuteLogin(object? parameter)
+        private async void ExecuteLogin(object? parameter)
         {
             var password = parameter as PasswordBox;
             if (password != null)
@@ -62,9 +62,9 @@ namespace WpfApp1.ViewModel
                         command.Parameters.AddWithValue("@username", CurrentUser.Username);
                         command.Parameters.AddWithValue("@password", CurrentUser.Password);
 
-                        connection.Open();
+                        await connection.OpenAsync();
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
                             if (reader.HasRows)
                             {

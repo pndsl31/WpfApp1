@@ -111,7 +111,7 @@ namespace WpfApp1.ViewModel
     
                 MessageBox.Show("Success", "Record Updated", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        private void LoadItemsFromFile()
+        private async Task LoadItemsFromFile()
         {
             string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
             try
@@ -123,10 +123,10 @@ namespace WpfApp1.ViewModel
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
-                        connection.Open();
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        await connection.OpenAsync();
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
 
                                 table1 item = new table1();
