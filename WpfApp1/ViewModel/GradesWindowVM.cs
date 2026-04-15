@@ -47,7 +47,7 @@ namespace WpfApp1.ViewModel
             LoadItemsFromFile();
 
         }
-        public void ExecuteSaveCommand(object? par)
+        async void ExecuteSaveCommand(object? par)
         {
             table1 newGrade = new table1()
             {
@@ -66,7 +66,39 @@ namespace WpfApp1.ViewModel
             newAccount.Grades = "";
             newAccount.DateReported = DateTime.Now;
             newAccount.IsComplete = true;
+
+            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string query = "INSERT INTO table1 (ID, Subject, Grades, DateReported, IsComplete) VALUES (@ID, @Subject, @Grades, @DateReported, @IsComplete)";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        await connection.OpenAsync();
+                        command.Parameters.AddWithValue("@ID", newGrade.ID);
+                        command.Parameters.AddWithValue("@Subject", newGrade.Subject);
+                        command.Parameters.AddWithValue("@Grades", newGrade.Grades);
+                        command.Parameters.AddWithValue("@DateReported", newGrade.DateReported);
+                        command.Parameters.AddWithValue("@IsComplete", newGrade.IsComplete);
+
+
+                        //await command.ExecuteNonQueryAsync();
+                        int rowsAffected = await command.ExecuteNonQueryAsync();
+                        if (rowsAffected != 0)
+                        {
+                            MessageBox.Show("Record successfully inserted into the database.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                }
+            }catch (Exception ex)
+            {
+                MessageBox.Show("Database connection failed: " + ex.Message);
+            }
+
         }
+
 
         private table1 _selectedItem;
         
@@ -89,8 +121,32 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        public void ExecuteDeleteCommand(object? par)
+        private async void ExecuteDeleteCommand(object? par)
         {
+            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE FROM table1 WHERE ID = @ID";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        await connection.OpenAsync();
+                        command.Parameters.AddWithValue("@ID", SelectedItem.ID);
+
+                        int rowsAffected = await command.ExecuteNonQueryAsync();
+                        if (rowsAffected != 0)
+                        {
+                            MessageBox.Show("Record successfully deleted from the database.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Database connection failed: " + ex.Message);
+            }
             table1List.Remove(SelectedItem);
         }
 
@@ -101,7 +157,7 @@ namespace WpfApp1.ViewModel
             newAccount.Grades = string.Empty;
 
         }
-        public void ExecuteUpdateCommand(object? par)
+        private async void ExecuteUpdateCommand(object? par)
         {
             _selectedItem.ID = newAccount.ID;
             _selectedItem.Subject = newAccount.Subject;
@@ -110,6 +166,33 @@ namespace WpfApp1.ViewModel
             _selectedItem.IsComplete = newAccount.IsComplete;
     
                 MessageBox.Show("Success", "Record Updated", MessageBoxButton.OK, MessageBoxImage.Information);
+            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE table1 SET Subject = @Subject, Grades = @Grades, DateReported = @DateReported, IsComplete = @IsComplete WHERE ID = @ID";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        await connection.OpenAsync();
+                        command.Parameters.AddWithValue("@ID", _selectedItem.ID);
+                        command.Parameters.AddWithValue("@Subject", _selectedItem.Subject);
+                        command.Parameters.AddWithValue("@Grades", _selectedItem.Grades);
+                        command.Parameters.AddWithValue("@DateReported", _selectedItem.DateReported);
+                        command.Parameters.AddWithValue("@IsComplete", _selectedItem.IsComplete);
+
+                        int rowsAffected = await command.ExecuteNonQueryAsync();
+                        if (rowsAffected != 0)
+                        {
+                            MessageBox.Show("Record successfully updated in the database.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                }
+            }catch (Exception ex)
+            {
+                MessageBox.Show("Database connection failed: " + ex.Message);
+            }
         }
         private async Task LoadItemsFromFile()
         {
