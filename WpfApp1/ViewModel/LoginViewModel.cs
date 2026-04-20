@@ -47,7 +47,9 @@ namespace WpfApp1.ViewModel
             //    MessageBox.Show("Invalid username or password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);   
             //}
 
-            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
+
             bool isLoginValid = false;
 
             try

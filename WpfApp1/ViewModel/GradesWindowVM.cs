@@ -67,12 +67,24 @@ namespace WpfApp1.ViewModel
             newAccount.DateReported = DateTime.Now;
             newAccount.IsComplete = true;
 
-            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True
+            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;
+                                        Database=poodle;
+                                        Integrated Security=True;
+                                        Persist Security Info=False;
+                                        Pooling=False;
+                                        MultipleActiveResultSets=False;
+                                        Encrypt=True;
+                                        TrustServerCertificate=False;
+                                        Application Name=""SQL Server Management Studio"";
+                                        Command Timeout=0";
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     string query = "INSERT INTO table1 (ID, Subject, Grades, DateReported, IsComplete) VALUES (@ID, @Subject, @Grades, @DateReported, @IsComplete)";
+
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -123,7 +135,9 @@ namespace WpfApp1.ViewModel
 
         private async void ExecuteDeleteCommand(object? par)
         {
-            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+
+            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -166,7 +180,9 @@ namespace WpfApp1.ViewModel
             _selectedItem.IsComplete = newAccount.IsComplete;
     
                 MessageBox.Show("Success", "Record Updated", MessageBoxButton.OK, MessageBoxImage.Information);
-            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+
+
+            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -196,7 +212,9 @@ namespace WpfApp1.ViewModel
         }
         private async Task LoadItemsFromFile()
         {
-            string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True
+
+            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
