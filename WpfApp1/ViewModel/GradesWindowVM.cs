@@ -39,15 +39,15 @@ namespace WpfApp1.ViewModel
             newAccount = new table1();
 
             _selectedItem = new table1();
-            SaveCommand = new RelayCommand(ExecuteSaveCommand);
-            DeleteCommand = new RelayCommand(ExecuteDeleteCommand);
+            SaveCommand = new AsyncRelayCommand(ExecuteSaveCommand);
+            DeleteCommand = new AsyncRelayCommand(ExecuteDeleteCommand);
             ClearCommand = new RelayCommand(ExecuteClearCommand);
-            UpdateCommand = new RelayCommand(ExecuteUpdateCommand);
+            UpdateCommand = new AsyncRelayCommand(ExecuteUpdateCommand);
 
             LoadItemsFromFile();
 
         }
-        async void ExecuteSaveCommand(object? par)
+        public async Task ExecuteSaveCommand(object? par)
         {
             table1 newGrade = new table1()
             {
@@ -133,7 +133,7 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        private async void ExecuteDeleteCommand(object? par)
+        private async Task ExecuteDeleteCommand(object? par)
         {
             //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
 
@@ -171,7 +171,7 @@ namespace WpfApp1.ViewModel
             newAccount.Grades = string.Empty;
 
         }
-        private async void ExecuteUpdateCommand(object? par)
+        private async Task ExecuteUpdateCommand(object? par)
         {
             _selectedItem.ID = newAccount.ID;
             _selectedItem.Subject = newAccount.Subject;
