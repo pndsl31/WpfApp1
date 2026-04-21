@@ -17,16 +17,14 @@
         </Grid.Background>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height= "15"/>
-            <RowDefinition Height= "25"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="25"/>
             <RowDefinition/>
-            <RowDefinition Height=" 40"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
-
             <Grid.ColumnDefinitions>
-
                 <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="90"/>
@@ -56,7 +54,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
 
             <Menu Grid.Column="3" 
                   HorizontalAlignment="Center"
@@ -104,46 +101,84 @@
                           FontSize="12" 
                           Command="{Binding Navigation.LogoutCommand}"/>
             </Menu>
-
         </Grid>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Orientation="Horizontal">
 
+        <!-- ==================== CARDS ROW ==================== -->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+
+            <!-- UNCHANGED: Total Subjects card -->
             <Border Background="#FF110C57" CornerRadius="10" Padding="30,20" Margin="20">
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="Total Subjects"
-                       Foreground="White"
-                       FontFamily="Century Gothic"
-                       FontSize="14"
-                       HorizontalAlignment="Center"/>
+                               Foreground="White"
+                               FontFamily="Century Gothic"
+                               FontSize="14"
+                               HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding TotalSubjects}"
-                       Foreground="White"
-                       FontFamily="Century Gothic"
-                       FontSize="40"
-                       FontWeight="Bold"
-                       HorizontalAlignment="Center"/>
+                               Foreground="White"
+                               FontFamily="Century Gothic"
+                               FontSize="40"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"/>
                 </StackPanel>
             </Border>
 
+            <!-- UNCHANGED: Average Grade card -->
             <Border Background="#FF110C57" CornerRadius="10" Padding="30,20" Margin="20">
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="Average Grade"
-                       Foreground="White"
-                       FontFamily="Century Gothic"
-                       FontSize="14"
-                       HorizontalAlignment="Center"/>
+                               Foreground="White"
+                               FontFamily="Century Gothic"
+                               FontSize="14"
+                               HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding AverageGrade}"
-                       Foreground="White"
-                       FontFamily="Century Gothic"
-                       FontSize="40"
-                       FontWeight="Bold"
-                       HorizontalAlignment="Center"/>
+                               Foreground="White"
+                               FontFamily="Century Gothic"
+                               FontSize="40"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- NEW: Target Grade card -->
+            <Border Background="#FF110C57" CornerRadius="10" Padding="30,20" Margin="20">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Target Grade"
+                               Foreground="White"
+                               FontFamily="Century Gothic"
+                               FontSize="14"
+                               HorizontalAlignment="Center"/>
+                    <TextBox Text="{Binding TargetGrade, UpdateSourceTrigger=PropertyChanged}"
+                             Width="100"
+                             FontSize="32"
+                             FontWeight="Bold"
+                             TextAlignment="Center"
+                             Margin="0,5,0,5"/>
+                    <Button Content="Set Target"
+                            Command="{Binding SaveTargetGradeCommand}"
+                            FontFamily="Century Gothic"
+                            FontSize="11"
+                            Padding="8,3"/>
                 </StackPanel>
             </Border>
 
         </StackPanel>
+
+        <!-- NEW: Grade status message below the cards -->
+        <TextBlock Text="{Binding GradeStatusMessage}"
+                   Grid.Row="2"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,20"
+                   Foreground="White"
+                   FontFamily="Century Gothic"
+                   FontSize="13"/>
+
+        <!-- UNCHANGED: Welcome message -->
         <TextBlock 
             Text="{Binding WelcomeMessage}"
             HorizontalAlignment="Left"
@@ -161,7 +196,6 @@
                 </TransformGroup>
             </TextBlock.RenderTransform>
         </TextBlock>
-
 
     </Grid>
 </Window>
