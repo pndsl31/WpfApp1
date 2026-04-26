@@ -13,5 +13,7 @@ namespace WpfApp1.View
             CurrentUser = _CurrentUser;
             DataContext = new SubjectsViewModel(_CurrentUser, this);
         }
+
+
     }
 }

@@ -5,36 +5,156 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="Poodle" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
     <Window.Background>
-        <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
+        <ImageBrush ImageSource="..\Images\backgroundImage.jpg" Stretch="UniformToFill"/>
     </Window.Background>
 
-    <Viewbox Stretch= "Uniform">
-        <Grid Height="350">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize"   Value="13"/>
+            <Setter Property="Cursor"     Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                BorderBrush="#CC77FF"
+                                BorderThickness="1"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background"  Value="#9B4FDE"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#EE99FF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background"  Value="#5B1F9E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+
+        <Rectangle Fill="#55000000"/>
+
+        <Border HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="370"
+                CornerRadius="16"
+                Padding="40,36,40,40">
+            <Border.Background>
+                <SolidColorBrush Color="#EE0D0A2E"/>
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect Color="#AC41CB" BlurRadius="40" ShadowDepth="0" Opacity="0.55"/>
+            </Border.Effect>
+
             <StackPanel>
-                <Image x:Name="LoginLogo" Source="../Images/P-removebg-preview.png" Height="116" Width="253"/>
-                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Poodle"  FontSize="50 " FontFamily="Cascadia Code SemiBold" FontStyle="Italic" FontWeight="UltraBold" Height="58" Width="177">
+
+                <Image Source="../Images/P-removebg-preview.png"
+                       Height="68" Width="68"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,6"/>
+
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="Cascadia Code SemiBold"
+                           FontStyle="Italic"
+                           FontWeight="UltraBold"
+                           FontSize="38"
+                           Margin="0,0,0,2">
                     <TextBlock.Foreground>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="White"/>
-                            <GradientStop Color="#FF5C17E9" Offset="1"/>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="White"   Offset="0"/>
+                            <GradientStop Color="#CC77FF" Offset="1"/>
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
+                    Poodle
                 </TextBlock>
-                <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Username: " VerticalAlignment="Top"  FontSize="18"  Foreground="White" FontFamily="Lucida Console"/>
-                <TextBox x:Name="UsernameTextBox"  TextWrapping="NoWrap" Text="{Binding CurrentUser.Username,UpdateSourceTrigger=PropertyChanged}" Height="25" FontSize="20" FontFamily="OCR A Extended" />
-                <TextBlock TextWrapping="Wrap" Text="Password:"  Foreground="White" FontFamily="Lucida Console" FontSize="18"/>
-                <PasswordBox x:Name="PasswordTextBox"
-                Height="25"
-                FontSize="20"
-                FontFamily="OCR A Extended"/>
-                <Button x:Name="LogInButton_LOGINPAGE" Content="Log in" Height="27" 
-                Width="72" FontSize="15" BorderBrush="White" Foreground="#FF1E1369" 
-                Background="#FFF1F0F5" FontWeight="Bold" Command= "{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordTextBox}"/>
+
+                <TextBlock Text="Student Personal Portal"
+                           HorizontalAlignment="Center"
+                           FontFamily="Century Gothic"
+                           FontSize="11"
+                           Foreground="#9988BB"
+                           Margin="0,0,0,28"/>
+
+                <TextBlock Text="USERNAME"
+                           FontFamily="Century Gothic"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Foreground="#9988BB"
+                           Margin="0,0,0,5"/>
+
+                <Border CornerRadius="8" BorderBrush="#AC41CB" BorderThickness="1" Margin="0,0,0,16">
+                    <Border.Background>
+                        <SolidColorBrush Color="#221450"/>
+                    </Border.Background>
+                    <TextBox x:Name="UsernameTextBox"
+                             Text="{Binding CurrentUser.Username, UpdateSourceTrigger=PropertyChanged}"
+                             Background="Transparent"
+                             Foreground="White"
+                             CaretBrush="White"
+                             FontFamily="Century Gothic"
+                             FontSize="14"
+                             Height="40"
+                             Padding="12,0"
+                             BorderThickness="0"
+                             VerticalContentAlignment="Center"/>
+                </Border>
+
+                <TextBlock Text="PASSWORD"
+                           FontFamily="Century Gothic"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Foreground="#9988BB"
+                           Margin="0,0,0,5"/>
+
+                <Border CornerRadius="8" BorderBrush="#AC41CB" BorderThickness="1" Margin="0,0,0,28">
+                    <Border.Background>
+                        <SolidColorBrush Color="#221450"/>
+                    </Border.Background>
+                    <PasswordBox x:Name="PasswordTextBox"
+                                 Background="Transparent"
+                                 Foreground="White"
+                                 CaretBrush="White"
+                                 FontFamily="Century Gothic"
+                                 FontSize="14"
+                                 Height="40"
+                                 Padding="12,0"
+                                 BorderThickness="0"
+                                 VerticalContentAlignment="Center"/>
+                </Border>
+
+                <Button Content="LOG IN"
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="{Binding ElementName=PasswordTextBox}"
+                        Height="44"
+                        FontSize="14"
+                        Padding="0">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#7B2FBE" Offset="0"/>
+                            <GradientStop Color="#AC41CB" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
 
             </StackPanel>
-        </Grid>
-    </Viewbox>
+        </Border>
 
+    </Grid>
 </Window>

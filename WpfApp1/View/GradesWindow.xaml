@@ -3,207 +3,328 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="GradesWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="Grades — Poodle" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#BBFFFFFF"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bdr" Background="Transparent"
+                                BorderThickness="0,0,0,2" BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bdr" Property="BorderBrush" Value="#AC41CB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="NavButtonActive" TargetType="Button" BasedOn="{StaticResource NavButton}">
+            <Setter Property="Foreground" Value="#CC77FF"/>
+        </Style>
+        <Style x:Key="NavButtonDanger" TargetType="Button" BasedOn="{StaticResource NavButton}">
+            <Setter Property="Foreground" Value="#FFAA88"/>
+        </Style>
+
+        <Style x:Key="FormLabel" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#9988BB"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style x:Key="FormField" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#22FFFFFF"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="#33AC41CB"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#CC110C57"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderBrush" Value="#33AC41CB"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="111*"/>
-                <ColumnDefinition Width="50*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.Background>
-                <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
-            </Grid.Background>
+        <Grid.Background>
+            <ImageBrush ImageSource="..\Images\backgroundImage.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <!--<Rectangle Fill="#99050316"/>-->
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height= "15"/>
-                <RowDefinition Height= "25"/>
-                <RowDefinition/>
-                <RowDefinition Height=" 40"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <Grid Grid.Row="1" Grid.ColumnSpan="2">
-
+        <!-- NAV BAR -->
+        <Border Grid.Row="0" Background="#CC0A0730" BorderThickness="0,0,0,1">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00AC41CB" Offset="0"/>
+                    <GradientStop Color="#FFAC41CB" Offset="0.5"/>
+                    <GradientStop Color="#00AC41CB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid>
                 <Grid.ColumnDefinitions>
-
-                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-
-                <Button x:Name="HomeButton" 
-                    Grid.Column="0" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    BorderBrush="{x:Null}"
-                    Command="{Binding Navigation.GoToMainDashboardCommand}"
-                    Width="40" 
-                    Height="40">
-                    <Button.Content>
-                        <Image x:Name="HOME_PAGE_BUTTON" 
-                           Source="../Images/P-removebg-preview.png" 
-                           Width="30" 
-                           Height="30"/>
-                    </Button.Content>
+                <Button Grid.Column="0" Command="{Binding Navigation.GoToMainDashboardCommand}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <ContentPresenter/>
                         </ControlTemplate>
                     </Button.Template>
+                    <Image Source="../Images/P-removebg-preview.png" Width="28" Height="28"/>
                 </Button>
-
-
-                <Menu Grid.Column="3" 
-                  HorizontalAlignment="Center" 
-                  Background="{x:Null}">
-                    <MenuItem x:Name="SubjectsWindow" 
-                          Header="Subjects"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          Command="{Binding Navigation.GoToSubjectsCommand}"/>
-                </Menu>
-
-                <Menu Grid.Column="4" 
-                  HorizontalAlignment="Center" 
-                  Background="{x:Null}">
-                    <MenuItem x:Name="GradesMenu" 
-                          Header="Grades"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          />
-                </Menu>
-
-                <Menu Grid.Column="5" 
-                      HorizontalAlignment="Center" 
-                      Background="{x:Null}">
-                    <MenuItem x:Name="ProfileWindow" Header="Profile"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12"
-                          Command="{Binding Navigation.GoToProfileCommand}"/>
-                </Menu>
-
-                <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
-                    <MenuItem x:Name="LogoutWindow_Dashboard" 
-                          Header="Logout"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          Command="{Binding Navigation.LogoutCommand}"/>
-                </Menu>
-
+                <TextBlock Grid.Column="1" Text="POODLE" VerticalAlignment="Center"
+                           FontFamily="Cascadia Code SemiBold" FontSize="13"
+                           FontWeight="Bold" Foreground="#CC77FF"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal"
+                            VerticalAlignment="Center" Margin="0,0,16,0">
+                    <Button Content="Subjects" Command="{Binding Navigation.GoToSubjectsCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Grades" Style="{StaticResource NavButtonActive}"/>
+                    <Button Content="Profile" Command="{Binding Navigation.GoToProfileCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Logout" Command="{Binding Navigation.LogoutCommand}"
+                            Style="{StaticResource NavButtonDanger}"/>
+                </StackPanel>
             </Grid>
-            <DataGrid ItemsSource="{Binding table1List}" 
-                          SelectedItem="{Binding SelectedItem}"                   
-                          AlternatingRowBackground="#22FFFFFF"  
-                          RowBackground="Transparent"
+        </Border>
+
+        <!-- BODY -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT: DataGrid -->
+            <Grid Grid.Column="0" Margin="30,24,20,24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="12"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="GRADE RECORDS" FontFamily="Cascadia Code SemiBold"
+                               FontSize="10" FontWeight="Bold" Foreground="#AC41CB"
+                               Margin="0,0,0,4"/>
+                    <TextBlock Text="{Binding WelcomeMessage}" FontFamily="Century Gothic"
+                               FontSize="18" FontWeight="Bold" Foreground="White"/>
+                    <Rectangle Height="2" Width="50" HorizontalAlignment="Left" Margin="0,6,0,0">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#CC77FF" Offset="0"/>
+                                <GradientStop Color="#00CC77FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </StackPanel>
+
+                <DataGrid Grid.Row="2"
+                          ItemsSource="{Binding table1List}"
+                          SelectedItem="{Binding SelectedItem}"
                           AutoGenerateColumns="True"
                           CanUserAddRows="False"
-                          Margin="78,53,157,70" 
-                          BorderBrush="#FFAC41CB" 
-                          Background="{x:Null}" 
-                          ColumnWidth="*"
-                          Foreground="White" Grid.Row="2" RenderTransformOrigin="0.5,0.5">
-                <DataGrid.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleY="-0.231"/>
-                        <RotateTransform/>
-                        <TranslateTransform Y="-0.746"/>
-                    </TransformGroup>
-                </DataGrid.RenderTransform>
-            </DataGrid>
+                          Background="Transparent"
+                          RowBackground="#11FFFFFF"
+                          AlternatingRowBackground="#1AFFFFFF"
+                          Foreground="White"
+                          BorderBrush="#33AC41CB"
+                          BorderThickness="1"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="#15FFFFFF"
+                          ColumnWidth="*" RowHeight="36"
+                          SelectionMode="Single">
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                         Color="#44AC41CB"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                                         Color="White"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                                         Color="#33AC41CB"/>
+                    </DataGrid.Resources>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="FontFamily" Value="Century Gothic"/>
+                            <Setter Property="FontSize" Value="12"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                </DataGrid>
+            </Grid>
 
-            <Rectangle Grid.Column="1" HorizontalAlignment="Center" Height="333" Margin="0,79,0,0" Grid.Row="2" Stroke="Black" VerticalAlignment="Top" Width="199" Fill="#FF110C57"/>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Height="24" Margin="0,93,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Input Grades" VerticalAlignment="Top" Width="144" Foreground="White" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,177,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Foreground="White" FontFamily="Century Gothic"><Run Text="Subject"/><LineBreak/><Run/></TextBlock>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,152,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="18" Foreground="White" FontFamily="Century Gothic"><Run Text="ID"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,201,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Foreground="White" FontFamily="Century Gothic" Text="Grades"/>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="70,230,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" Foreground="White" FontFamily="Century Gothic" Text="DateReported"/>
+            <!-- Divider -->
+            <Rectangle Grid.Column="1" Margin="0,24">
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#00AC41CB" Offset="0"/>
+                        <GradientStop Color="#AAAC41CB" Offset="0.5"/>
+                        <GradientStop Color="#00AC41CB" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
 
-            <TextBox x:Name="txtID"
-                     Text="{Binding newAccount.ID}"
-                     Grid.Column="1"
-                     Margin="135,149,69,0"
-                     Height="20"
-                     VerticalAlignment="Top" Grid.Row="2"/>
+            <!-- RIGHT: Input Panel -->
+            <Border Grid.Column="2" Background="#EE0A0730">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="22,24">
+                    <StackPanel>
+                        <TextBlock Text="INPUT GRADES" FontFamily="Cascadia Code SemiBold"
+                                   FontSize="10" FontWeight="Bold" Foreground="#AC41CB"
+                                   Margin="0,0,0,4"/>
+                        <TextBlock Text="Add or edit a record" FontFamily="Century Gothic"
+                                   FontSize="12" Foreground="#9988BB" Margin="0,0,0,20"/>
 
-            <TextBox x:Name="txtSubject"
-                     Text="{Binding newAccount.Subject}"
-                     Grid.Column="1"
-                     Margin="135,174,69,0"
-                     Height="20"
-                     VerticalAlignment="Top" Grid.Row="2"/>
+                        <TextBlock Text="SUBJECT ID" Style="{StaticResource FormLabel}"/>
+                        <TextBox Text="{Binding newAccount.ID}" Style="{StaticResource FormField}"
+                                 Margin="0,0,0,14"/>
 
-            <TextBox x:Name="txtGrades"
-                     Text="{Binding newAccount.Grades}"
-                     Grid.Column="1"
-                     Margin="135,200,69,0"
-                     Height="20"
-                     VerticalAlignment="Top" Grid.Row="2"/>
+                        <TextBlock Text="SUBJECT" Style="{StaticResource FormLabel}"/>
+                        <TextBox Text="{Binding newAccount.Subject}" Style="{StaticResource FormField}"
+                                 Margin="0,0,0,14"/>
 
-            <DatePicker x:Name="dpDate"
-                        SelectedDate="{Binding newAccount.DateReported}"
-                        Grid.Column="1"
-                        Margin="165,225,69,0"
-                        Height="24"
-                        VerticalAlignment="Top" Grid.Row="2"/>
+                        <TextBlock Text="GRADE (0–100)" Style="{StaticResource FormLabel}"/>
+                        <TextBox Text="{Binding newAccount.Grades}" Style="{StaticResource FormField}"
+                                 Margin="0,0,0,14"/>
 
-            <Button Content="Add"
-                    Command="{Binding SaveCommand}"
-                    Grid.Column="1"
-                    Margin="70,272,69,184" Grid.Row="2"
-                    />
-            <Button x:Name="deleteButton" 
-                    Grid.Column="1" 
-                    Content="Delete" 
-                    HorizontalAlignment="Left" 
-                    Margin="70,370,0,0" 
-                    Grid.Row="2" 
-                    VerticalAlignment="Top" 
-                    Width="77" 
-                    Command="{Binding DeleteCommand}" 
-                    RenderTransformOrigin="0.229,0.882" 
-                    Height="32"/>
-            <Button x:Name="clearButton" 
-                    Grid.Column="1" 
-                    Content="Clear" 
-                    HorizontalAlignment="Left" 
-                    Margin="165,370,0,0" 
-                    Grid.Row="2" 
-                    VerticalAlignment="Top" 
-                    Width="77" 
-                    Command="{Binding ClearCommand}" 
-                    RenderTransformOrigin="0.502,-0.932" Height="32" />
-            <Button Content="Update"
-                Command="{Binding UpdateCommand}"
-                Grid.Column="1"
-                Margin="71,320,69,134" Grid.Row="2" 
-                    />
+                        <TextBlock Text="DATE REPORTED" Style="{StaticResource FormLabel}"/>
+                        <DatePicker SelectedDate="{Binding newAccount.DateReported}"
+                                    Foreground="White" FontFamily="Century Gothic"
+                                    Background="#22FFFFFF" BorderBrush="#33AC41CB"
+                                    Height="34" Margin="0,0,0,22"/>
+
+                        <Rectangle Height="1" Fill="#22FFFFFF" Margin="0,0,0,18"/>
+
+                        <!-- ADD -->
+                        <Button Command="{Binding SaveCommand}" Height="36"
+                                Margin="0,0,0,8" Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
+                                            BorderBrush="#55AC41CB">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Color="#7B2FBE" Offset="0"/>
+                                                <GradientStop Color="#AC41CB" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <TextBlock Text="ADD RECORD" FontFamily="Century Gothic"
+                                                   FontSize="11" FontWeight="Bold" Foreground="White"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="btn" Property="Opacity" Value="0.85"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- UPDATE -->
+                        <Button Command="{Binding UpdateCommand}" Height="36"
+                                Margin="0,0,0,8" Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
+                                            BorderBrush="#331A6090" Background="#221A6090">
+                                        <TextBlock Text="UPDATE RECORD" FontFamily="Century Gothic"
+                                                   FontSize="11" FontWeight="Bold" Foreground="#88BBFF"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="btn" Property="Background" Value="#441A6090"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- DELETE + CLEAR row -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Command="{Binding DeleteCommand}"
+                                    Height="36" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
+                                                BorderBrush="#338B1A2A" Background="#228B1A2A">
+                                            <TextBlock Text="DELETE" FontFamily="Century Gothic"
+                                                       FontSize="11" FontWeight="Bold" Foreground="#FF8888"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="btn" Property="Background" Value="#448B1A2A"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button Grid.Column="2" Command="{Binding ClearCommand}"
+                                    Height="36" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
+                                                BorderBrush="#333A3A5A" Background="#223A3A5A">
+                                            <TextBlock Text="CLEAR" FontFamily="Century Gothic"
+                                                       FontSize="11" FontWeight="Bold" Foreground="#AAAACC"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="btn" Property="Background" Value="#443A3A5A"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
         </Grid>
-        <TextBlock 
-           Text="{Binding WelcomeMessage}"
-            HorizontalAlignment="Left"
-            Margin="39,52,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Foreground="White" RenderTransformOrigin="0.5,0.5" Width="666" Height="66" FontFamily="Verdana" FontSize="22" FontWeight="Bold">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
     </Grid>
-
 </Window>

@@ -1,9 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -13,13 +10,17 @@ namespace WpfApp1.ViewModel
 {
     internal class GradesWindowVM : ObservableObject
     {
+        private static readonly string _conn = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
+
         public ObservableCollection<table1> table1List { get; set; }
         public UserModel _CurrentUser { get; set; }
+
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
-        public MainViewModel Navigation {  get; set; }
+
+        public MainViewModel Navigation { get; set; }
         public table1 newAccount { get; set; }
         public string WelcomeMessage { get; set; }
 
@@ -28,28 +29,55 @@ namespace WpfApp1.ViewModel
             Navigation = new MainViewModel(currentUser, currentWindow);
             _CurrentUser = currentUser;
             WelcomeMessage = $"Welcome to the Grades Dashboard, {currentUser.Username}";
-            table1List = new ObservableCollection<table1>()
-            {
-            //    new table1 { ID = " 01", Subject = "Database", Grades = "100", DateReported = new DateTime(2024, 5, 10), IsComplete = true },
-            //    new table1 { ID = " 02", Subject = "Networking", Grades = "99", DateReported = new DateTime(2024, 5, 12), IsComplete = true },
-            //    new table1 { ID = " 03", Subject = "Event Driven Programming", Grades = "98", DateReported = new DateTime(2024, 5, 15), IsComplete = true },
-            //    new table1 { ID = " 04", Subject = "History", Grades = "97", DateReported = new DateTime(2024, 5, 18), IsComplete = true },
-            //    new table1 { ID = " 05", Subject = "Integrative Programming", Grades = "96", DateReported = new DateTime(2024, 5, 20), IsComplete = true }
-            };
-            newAccount = new table1();
 
+            table1List = new ObservableCollection<table1>();
+            newAccount = new table1();
             _selectedItem = new table1();
+
             SaveCommand = new AsyncRelayCommand(ExecuteSaveCommand);
             DeleteCommand = new AsyncRelayCommand(ExecuteDeleteCommand);
             ClearCommand = new RelayCommand(ExecuteClearCommand);
             UpdateCommand = new AsyncRelayCommand(ExecuteUpdateCommand);
 
-            LoadItemsFromFile();
-
+            // FIX: use discard so the compiler doesn't warn about unawaited async
+            _ = LoadItemsFromFile();
         }
+
+        // ─── Save ─────────────────────────────────────────────────────────────
+
         public async Task ExecuteSaveCommand(object? par)
         {
-            table1 newGrade = new table1()
+            // ── Input validation ──────────────────────────────────────────────
+            if (string.IsNullOrWhiteSpace(newAccount.ID))
+            {
+                MessageBox.Show("ID cannot be empty.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(newAccount.Subject))
+            {
+                MessageBox.Show("Subject cannot be empty.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(newAccount.Grades))
+            {
+                MessageBox.Show("Grades cannot be empty.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!double.TryParse(newAccount.Grades, out double gradeValue) || gradeValue < 0 || gradeValue > 100)
+            {
+                MessageBox.Show("Grades must be a number between 0 and 100.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            // ─────────────────────────────────────────────────────────────────
+
+            table1 newGrade = new table1
             {
                 ID = newAccount.ID,
                 Subject = newAccount.Subject,
@@ -58,70 +86,56 @@ namespace WpfApp1.ViewModel
                 IsComplete = newAccount.IsComplete
             };
 
-            table1List.Add(newGrade);
-            MessageBox.Show("Success", "New Record Added", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            newAccount.ID = "";
-            newAccount.Subject = "";
-            newAccount.Grades = "";
-            newAccount.DateReported = DateTime.Now;
-            newAccount.IsComplete = true;
-
-            //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;
-                                        Database=poodle;
-                                        Integrated Security=True;
-                                        Persist Security Info=False;
-                                        Pooling=False;
-                                        MultipleActiveResultSets=False;
-                                        Encrypt=True;
-                                        TrustServerCertificate=False;
-                                        Application Name=""SQL Server Management Studio"";
-                                        Command Timeout=0";
-
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(_conn))
                 {
+                    await connection.OpenAsync();
                     string query = "INSERT INTO table1 (ID, Subject, Grades, DateReported, IsComplete) VALUES (@ID, @Subject, @Grades, @DateReported, @IsComplete)";
-
-
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        await connection.OpenAsync();
                         command.Parameters.AddWithValue("@ID", newGrade.ID);
                         command.Parameters.AddWithValue("@Subject", newGrade.Subject);
                         command.Parameters.AddWithValue("@Grades", newGrade.Grades);
                         command.Parameters.AddWithValue("@DateReported", newGrade.DateReported);
                         command.Parameters.AddWithValue("@IsComplete", newGrade.IsComplete);
 
-
-                        //await command.ExecuteNonQueryAsync();
                         int rowsAffected = await command.ExecuteNonQueryAsync();
-                        if (rowsAffected != 0)
+
+                        if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Record successfully inserted into the database.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            // Only add to UI list after DB confirms success
+                            table1List.Add(newGrade);
+                            MessageBox.Show("Record successfully added.", "Success",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            // Clear input fields
+                            newAccount.ID = "";
+                            newAccount.Subject = "";
+                            newAccount.Grades = "";
+                            newAccount.DateReported = DateTime.Now;
+                            newAccount.IsComplete = true;
                         }
                     }
                 }
-            }catch (Exception ex)
-            {
-                MessageBox.Show("Database connection failed: " + ex.Message);
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Database error: " + ex.Message, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
+        // ─── Selected Item ────────────────────────────────────────────────────
 
         private table1 _selectedItem;
-        
         public table1 SelectedItem
         {
-            get { return _selectedItem; }
+            get => _selectedItem;
             set
             {
                 _selectedItem = value;
                 OnPropertyCHanged(nameof(SelectedItem));
-
                 if (SelectedItem != null)
                 {
                     newAccount.ID = SelectedItem.ID;
@@ -133,118 +147,157 @@ namespace WpfApp1.ViewModel
             }
         }
 
+        // ─── Delete ───────────────────────────────────────────────────────────
+
         private async Task ExecuteDeleteCommand(object? par)
         {
-            //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            if (SelectedItem == null || string.IsNullOrWhiteSpace(SelectedItem.ID))
+            {
+                MessageBox.Show("Please select a record to delete.", "No Selection",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
+            var confirm = MessageBox.Show(
+                $"Delete record with ID '{SelectedItem.ID}'?",
+                "Confirm Delete",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (confirm != MessageBoxResult.Yes) return;
+
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(_conn))
                 {
+                    await connection.OpenAsync();
                     string query = "DELETE FROM table1 WHERE ID = @ID";
-
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        await connection.OpenAsync();
                         command.Parameters.AddWithValue("@ID", SelectedItem.ID);
-
                         int rowsAffected = await command.ExecuteNonQueryAsync();
-                        if (rowsAffected != 0)
+
+                        // FIX: only remove from UI list if DB delete actually succeeded
+                        if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Record successfully deleted from the database.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            table1List.Remove(SelectedItem);
+                            MessageBox.Show("Record deleted.", "Success",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Database connection failed: " + ex.Message);
+                MessageBox.Show("Database error: " + ex.Message, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            table1List.Remove(SelectedItem);
         }
+
+        // ─── Clear ────────────────────────────────────────────────────────────
 
         public void ExecuteClearCommand(object? par)
         {
             newAccount.ID = string.Empty;
             newAccount.Subject = string.Empty;
             newAccount.Grades = string.Empty;
-
+            newAccount.DateReported = DateTime.Now;
+            newAccount.IsComplete = true;
         }
+
+        // ─── Update ───────────────────────────────────────────────────────────
+
         private async Task ExecuteUpdateCommand(object? par)
         {
-            _selectedItem.ID = newAccount.ID;
-            _selectedItem.Subject = newAccount.Subject;
-            _selectedItem.Grades = newAccount.Grades;
-            _selectedItem.DateReported = newAccount.DateReported;
-            _selectedItem.IsComplete = newAccount.IsComplete;
-    
-                MessageBox.Show("Success", "Record Updated", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (SelectedItem == null || string.IsNullOrWhiteSpace(_selectedItem.ID))
+            {
+                MessageBox.Show("Please select a record to update.", "No Selection",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            if (string.IsNullOrWhiteSpace(newAccount.Subject))
+            {
+                MessageBox.Show("Subject cannot be empty.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
+            if (!double.TryParse(newAccount.Grades, out double gradeValue) || gradeValue < 0 || gradeValue > 100)
+            {
+                MessageBox.Show("Grades must be a number between 0 and 100.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(_conn))
                 {
+                    await connection.OpenAsync();
                     string query = "UPDATE table1 SET Subject = @Subject, Grades = @Grades, DateReported = @DateReported, IsComplete = @IsComplete WHERE ID = @ID";
-
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        await connection.OpenAsync();
                         command.Parameters.AddWithValue("@ID", _selectedItem.ID);
-                        command.Parameters.AddWithValue("@Subject", _selectedItem.Subject);
-                        command.Parameters.AddWithValue("@Grades", _selectedItem.Grades);
-                        command.Parameters.AddWithValue("@DateReported", _selectedItem.DateReported);
-                        command.Parameters.AddWithValue("@IsComplete", _selectedItem.IsComplete);
+                        command.Parameters.AddWithValue("@Subject", newAccount.Subject);
+                        command.Parameters.AddWithValue("@Grades", newAccount.Grades);
+                        command.Parameters.AddWithValue("@DateReported", newAccount.DateReported);
+                        command.Parameters.AddWithValue("@IsComplete", newAccount.IsComplete);
 
                         int rowsAffected = await command.ExecuteNonQueryAsync();
-                        if (rowsAffected != 0)
+
+                        if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Record successfully updated in the database.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            // Update in-memory object after DB confirms
+                            _selectedItem.Subject = newAccount.Subject;
+                            _selectedItem.Grades = newAccount.Grades;
+                            _selectedItem.DateReported = newAccount.DateReported;
+                            _selectedItem.IsComplete = newAccount.IsComplete;
+
+                            MessageBox.Show("Record updated.", "Success",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Database connection failed: " + ex.Message);
+                MessageBox.Show("Database error: " + ex.Message, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        // ─── Load ─────────────────────────────────────────────────────────────
+
         private async Task LoadItemsFromFile()
         {
-            //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True
-
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(_conn))
                 {
+                    await connection.OpenAsync();
                     string query = "SELECT * FROM table1";
-
                     using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-
-                        await connection.OpenAsync();
-                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        while (await reader.ReadAsync())
                         {
-                            while (await reader.ReadAsync())
+                            table1List.Add(new table1
                             {
-
-                                table1 item = new table1();
-                                item.ID = reader["ID"]?.ToString() ?? String.Empty;
-                                item.Subject = reader["Subject"]?.ToString() ?? String.Empty;
-                                item.Grades = reader["Grades"]?.ToString() ?? String.Empty;
-                                item.DateReported = Convert.ToDateTime(reader["DateReported"]?.ToString() ?? String.Empty);
-                                item.IsComplete = Convert.ToBoolean(reader["IsComplete"]?.ToString() ?? String.Empty);
-
-                                table1List.Add(item);
-                            }
+                                ID = reader["ID"]?.ToString() ?? "",
+                                Subject = reader["Subject"]?.ToString() ?? "",
+                                Grades = reader["Grades"]?.ToString() ?? "",
+                                DateReported = Convert.ToDateTime(reader["DateReported"]?.ToString() ?? DateTime.Now.ToString()),
+                                IsComplete = Convert.ToBoolean(reader["IsComplete"]?.ToString() ?? "false")
+                            });
                         }
                     }
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Database connection failed: " + ex.Message);
+                MessageBox.Show("Failed to load grades: " + ex.Message, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

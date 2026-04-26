@@ -1,42 +1,40 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Data.SqlClient;
 using WpfApp1.Model;
 
 namespace WpfApp1.ViewModel
 {
     public class SubjectsViewModel : ObservableObject
     {
-        private static readonly string _conn = @"Data Source=(localdb)\MSSQLLocalDB;
-            Database=poodle;Integrated Security=True;Persist Security Info=False;
-            Pooling=False;MultipleActiveResultSets=False;Encrypt=True;
-            TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";
-            Command Timeout=0";
+        private static readonly string _conn = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
 
         public MainViewModel Navigation { get; set; }
         public UserModel CurrentUser { get; set; }
         public string WelcomeMessage { get; set; }
+
         public ObservableCollection<SubjectItem> SubjectList { get; set; }
         public ObservableCollection<ActivityItem> ActivityList { get; set; }
 
-        private ActivityItem _newActivity = new ActivityItem();
-        public ActivityItem NewActivity
-        {
-            get => _newActivity;
-            set { _newActivity = value; OnPropertyCHanged(nameof(NewActivity)); }
-        }
+        public ActivityItem NewActivity { get; set; }
 
         private ActivityItem? _selectedActivity;
         public ActivityItem? SelectedActivity
         {
             get => _selectedActivity;
-            set { _selectedActivity = value; OnPropertyCHanged(nameof(SelectedActivity)); }
+            set
+            {
+                _selectedActivity = value;
+                OnPropertyCHanged(nameof(SelectedActivity));
+            }
         }
 
         public ICommand AddActivityCommand { get; set; }
-        public ICommand DeleteActivityCommand { get; set; }
         public ICommand ToggleCompleteCommand { get; set; }
+        public ICommand DeleteActivityCommand { get; set; }
 
         public SubjectsViewModel(UserModel currentUser, Window currentWindow)
         {
@@ -46,21 +44,24 @@ namespace WpfApp1.ViewModel
 
             SubjectList = new ObservableCollection<SubjectItem>
             {
-                new SubjectItem { Name = "Database", Schedule = "MWF 8:00-9:00 AM" },
-                new SubjectItem { Name = "Networking", Schedule = "TTh 9:00-10:30 AM" },
-                new SubjectItem { Name = "Event Driven Programming", Schedule = "MWF 1:00-2:00 PM" },
-                new SubjectItem { Name = "History", Schedule = "TTh 1:00-2:30 PM" },
-                new SubjectItem { Name = "Integrative Programming", Schedule = "Fri 3:00-5:00 PM" },
+                new SubjectItem { Name = "Database",                  Schedule = "MWF 8:00-9:00 AM"   },
+                new SubjectItem { Name = "Networking",                Schedule = "TTh 9:00-10:30 AM"  },
+                new SubjectItem { Name = "Event Driven Programming",  Schedule = "MWF 1:00-2:00 PM"   },
+                new SubjectItem { Name = "History",                   Schedule = "TTh 1:00-2:30 PM"   },
+                new SubjectItem { Name = "Integrative Programming",   Schedule = "Fri 3:00-5:00 PM"   },
             };
 
             ActivityList = new ObservableCollection<ActivityItem>();
+            NewActivity = new ActivityItem();
 
             AddActivityCommand = new AsyncRelayCommand(ExecuteAddActivity);
-            DeleteActivityCommand = new AsyncRelayCommand(ExecuteDeleteActivity);
             ToggleCompleteCommand = new AsyncRelayCommand(ExecuteToggleComplete);
+            DeleteActivityCommand = new AsyncRelayCommand(ExecuteDeleteActivity);
 
             _ = LoadActivitiesAsync();
         }
+
+        // ─── Load ────────────────────────────────────────────────────────────
 
         private async Task LoadActivitiesAsync()
         {
@@ -78,8 +79,8 @@ namespace WpfApp1.ViewModel
                             ActivityList.Add(new ActivityItem
                             {
                                 ActivityId = Convert.ToInt32(reader["ActivityId"]),
-                                SubjectName = reader["SubjectName"]?.ToString() ?? string.Empty,
-                                ActivityTitle = reader["ActivityTitle"]?.ToString() ?? string.Empty,
+                                SubjectName = reader["SubjectName"]?.ToString() ?? "",
+                                ActivityTitle = reader["ActivityTitle"]?.ToString() ?? "",
                                 DatePosted = Convert.ToDateTime(reader["DatePosted"]),
                                 Deadline = Convert.ToDateTime(reader["Deadline"]),
                                 IsCompleted = Convert.ToBoolean(reader["IsCompleted"])
@@ -90,87 +91,94 @@ namespace WpfApp1.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to load activities: " + ex.Message);
+                MessageBox.Show("Failed to load activities: " + ex.Message, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        // ─── Add ─────────────────────────────────────────────────────────────
 
         private async Task ExecuteAddActivity(object? par)
         {
-            if (string.IsNullOrWhiteSpace(NewActivity.SubjectName) ||
-                string.IsNullOrWhiteSpace(NewActivity.ActivityTitle))
+            // Input validation
+            if (string.IsNullOrWhiteSpace(NewActivity.SubjectName))
             {
-                MessageBox.Show("Please fill in the subject and activity title.");
+                MessageBox.Show("Please enter a Subject Name.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            try
+            if (string.IsNullOrWhiteSpace(NewActivity.ActivityTitle))
             {
-                using (SqlConnection connection = new SqlConnection(_conn))
-                {
-                    await connection.OpenAsync();
-                    string query = @"INSERT INTO Activities (SubjectName, ActivityTitle, DatePosted, Deadline, IsCompleted)
-                                     OUTPUT INSERTED.ActivityId
-                                     VALUES (@SubjectName, @ActivityTitle, @DatePosted, @Deadline, @IsCompleted)";
-
-                    using (SqlCommand cmd = new SqlCommand(query, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@SubjectName", NewActivity.SubjectName);
-                        cmd.Parameters.AddWithValue("@ActivityTitle", NewActivity.ActivityTitle);
-                        cmd.Parameters.AddWithValue("@DatePosted", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@Deadline", NewActivity.Deadline);
-                        cmd.Parameters.AddWithValue("@IsCompleted", false);
-
-                        int newId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-
-                        ActivityList.Add(new ActivityItem
-                        {
-                            ActivityId = newId,
-                            SubjectName = NewActivity.SubjectName,
-                            ActivityTitle = NewActivity.ActivityTitle,
-                            DatePosted = DateTime.Now,
-                            Deadline = NewActivity.Deadline,
-                            IsCompleted = false
-                        });
-                    }
-                }
-
-                NewActivity = new ActivityItem();
-                MessageBox.Show("Activity added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Please enter an Activity Title.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-            catch (Exception ex)
+
+            if (NewActivity.Deadline < DateTime.Today)
             {
-                MessageBox.Show("Failed to add activity: " + ex.Message);
+                MessageBox.Show("Deadline cannot be in the past.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-        }
 
-        private async Task ExecuteDeleteActivity(object? par)
-        {
-            if (SelectedActivity == null) return;
+            var activity = new ActivityItem
+            {
+                SubjectName = NewActivity.SubjectName,
+                ActivityTitle = NewActivity.ActivityTitle,
+                DatePosted = DateTime.Now,
+                Deadline = NewActivity.Deadline,
+                IsCompleted = false
+            };
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(_conn))
                 {
                     await connection.OpenAsync();
-                    string query = "DELETE FROM Activities WHERE ActivityId = @ActivityId";
+
+                    string query = @"
+                        INSERT INTO Activities (SubjectName, ActivityTitle, DatePosted, Deadline, IsCompleted)
+                        OUTPUT INSERTED.ActivityId
+                        VALUES (@SubjectName, @ActivityTitle, @DatePosted, @Deadline, @IsCompleted)";
+
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("@ActivityId", SelectedActivity.ActivityId);
-                        await cmd.ExecuteNonQueryAsync();
+                        cmd.Parameters.AddWithValue("@SubjectName", activity.SubjectName);
+                        cmd.Parameters.AddWithValue("@ActivityTitle", activity.ActivityTitle);
+                        cmd.Parameters.AddWithValue("@DatePosted", activity.DatePosted);
+                        cmd.Parameters.AddWithValue("@Deadline", activity.Deadline);
+                        cmd.Parameters.AddWithValue("@IsCompleted", activity.IsCompleted);
+
+                        var newId = await cmd.ExecuteScalarAsync();
+                        activity.ActivityId = Convert.ToInt32(newId);
                     }
                 }
 
-                ActivityList.Remove(SelectedActivity);
+                ActivityList.Add(activity);
+
+                // Clear input fields
+                NewActivity.SubjectName = "";
+                NewActivity.ActivityTitle = "";
+                NewActivity.Deadline = DateTime.Now;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to delete activity: " + ex.Message);
+                MessageBox.Show("Failed to save activity: " + ex.Message, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        // ─── Toggle Done ──────────────────────────────────────────────────────
 
         private async Task ExecuteToggleComplete(object? par)
         {
-            if (SelectedActivity == null) return;
+            if (SelectedActivity == null)
+            {
+                MessageBox.Show("Please select an activity first.", "No Selection",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             bool newStatus = !SelectedActivity.IsCompleted;
 
@@ -187,12 +195,57 @@ namespace WpfApp1.ViewModel
                         await cmd.ExecuteNonQueryAsync();
                     }
                 }
-
                 SelectedActivity.IsCompleted = newStatus;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to update activity: " + ex.Message);
+                MessageBox.Show("Failed to update activity: " + ex.Message, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // ─── Delete ───────────────────────────────────────────────────────────
+
+        private async Task ExecuteDeleteActivity(object? par)
+        {
+            if (SelectedActivity == null)
+            {
+                MessageBox.Show("Please select an activity to delete.", "No Selection",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var confirm = MessageBox.Show(
+                $"Delete '{SelectedActivity.ActivityTitle}'?",
+                "Confirm Delete",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (confirm != MessageBoxResult.Yes) return;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_conn))
+                {
+                    await connection.OpenAsync();
+                    string query = "DELETE FROM Activities WHERE ActivityId = @ActivityId";
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@ActivityId", SelectedActivity.ActivityId);
+                        int rows = await cmd.ExecuteNonQueryAsync();
+
+                        // Only remove from UI list if DB delete actually worked
+                        if (rows > 0)
+                        {
+                            ActivityList.Remove(SelectedActivity);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to delete activity: " + ex.Message, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

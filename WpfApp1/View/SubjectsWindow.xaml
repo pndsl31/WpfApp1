@@ -3,232 +3,407 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="SubjectsWindow" Height="700" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="Subjects — Poodle" Height="650" Width="1000"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#BBFFFFFF"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bdr" Background="Transparent"
+                                BorderThickness="0,0,0,2" BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bdr" Property="BorderBrush" Value="#AC41CB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="NavButtonActive" TargetType="Button" BasedOn="{StaticResource NavButton}">
+            <Setter Property="Foreground" Value="#CC77FF"/>
+        </Style>
+        <Style x:Key="NavButtonDanger" TargetType="Button" BasedOn="{StaticResource NavButton}">
+            <Setter Property="Foreground" Value="#FFAA88"/>
+        </Style>
+
+        <Style x:Key="SectionLabel" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Cascadia Code SemiBold"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#AC41CB"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#CC110C57"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderBrush" Value="#33AC41CB"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#22FFFFFF"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="#33AC41CB"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="32"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="131*"/>
-                <ColumnDefinition Width="29*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.Background>
-                <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
-            </Grid.Background>
+        <Grid.Background>
+            <ImageBrush ImageSource="..\Images\backgroundImage.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <!--<Rectangle Fill="#99050316"/>-->
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <!-- UNCHANGED: Nav bar -->
-            <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <!-- NAV BAR -->
+        <Border Grid.Row="0" Background="#CC0A0730" BorderThickness="0,0,0,1">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00AC41CB" Offset="0"/>
+                    <GradientStop Color="#FFAC41CB" Offset="0.5"/>
+                    <GradientStop Color="#00AC41CB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-
-                <Button x:Name="HomeButton" 
-                        Grid.Column="0" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"
-                        BorderBrush="{x:Null}"
-                        Command="{Binding Navigation.GoToMainDashboardCommand}"
-                        Width="40" 
-                        Height="40">
-                    <Button.Content>
-                        <Image x:Name="HOME_PAGE_BUTTON" 
-                               Source="../Images/P-removebg-preview.png" 
-                               Width="30" 
-                               Height="30"/>
-                    </Button.Content>
+                <Button Grid.Column="0" Command="{Binding Navigation.GoToMainDashboardCommand}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <ContentPresenter/>
                         </ControlTemplate>
                     </Button.Template>
+                    <Image Source="../Images/P-removebg-preview.png" Width="28" Height="28"/>
                 </Button>
+                <TextBlock Grid.Column="1" Text="POODLE" VerticalAlignment="Center"
+                           FontFamily="Cascadia Code SemiBold" FontSize="13"
+                           FontWeight="Bold" Foreground="#CC77FF"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal"
+                            VerticalAlignment="Center" Margin="0,0,16,0">
+                    <Button Content="Subjects" Style="{StaticResource NavButtonActive}"/>
+                    <Button Content="Grades" Command="{Binding Navigation.GoToGradesCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Profile" Command="{Binding Navigation.GoToProfileCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Logout" Command="{Binding Navigation.LogoutCommand}"
+                            Style="{StaticResource NavButtonDanger}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-                <Menu Grid.Column="3" HorizontalAlignment="Center" Background="{x:Null}">
-                    <MenuItem x:Name="SubjectsMenu" 
-                              Header="Subjects"
-                              Foreground="White"
-                              FontWeight="Bold"
-                              FontSize="12"/>
-                </Menu>
+        <!-- BODY -->
+        <Grid Grid.Row="1" Margin="30,20,30,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                <Menu Grid.Column="4" HorizontalAlignment="Center" Background="{x:Null}">
-                    <MenuItem x:Name="GradesWindow" 
-                              Header="Grades"
-                              Foreground="White"
-                              FontWeight="Bold"
-                              FontSize="12" 
-                              Command="{Binding Navigation.GoToGradesCommand}"/>
-                </Menu>
+            <!-- LEFT: Subjects -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
-                    <MenuItem x:Name="ProfileWindow" 
-                              Header="Profile"
-                              Foreground="White"
-                              FontWeight="Bold"
-                              FontSize="12"
-                              Command="{Binding Navigation.GoToProfileCommand}"/>
-                </Menu>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="ENROLLED SUBJECTS" Style="{StaticResource SectionLabel}"/>
+                    <TextBlock Text="{Binding WelcomeMessage}" FontFamily="Century Gothic"
+                               FontSize="15" FontWeight="Bold" Foreground="White"/>
+                    <Rectangle Height="2" Width="50" HorizontalAlignment="Left" Margin="0,6,0,0">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#CC77FF" Offset="0"/>
+                                <GradientStop Color="#00CC77FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </StackPanel>
 
-                <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
-                    <MenuItem x:Name="LogoutWindow_Dashboard" 
-                              Header="Logout"
+                <Border Grid.Row="2" CornerRadius="12" BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#DD110C57" Offset="0"/>
+                            <GradientStop Color="#DD1A0F70" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#55AC41CB" Offset="0"/>
+                            <GradientStop Color="#11AC41CB" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border.Effect>
+                        <DropShadowEffect Color="#AC41CB" BlurRadius="20"
+                                          ShadowDepth="0" Opacity="0.25"/>
+                    </Border.Effect>
+
+                    <DataGrid ItemsSource="{Binding SubjectList}"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              Background="Transparent"
+                              RowBackground="Transparent"
+                              AlternatingRowBackground="#11FFFFFF"
                               Foreground="White"
-                              FontWeight="Bold"
-                              FontSize="12" 
-                              Command="{Binding Navigation.LogoutCommand}"/>
-                </Menu>
+                              BorderThickness="0"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="#15FFFFFF"
+                              RowHeight="38">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                             Color="#44AC41CB"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                                             Color="White"/>
+                        </DataGrid.Resources>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="FontFamily" Value="Century Gothic"/>
+                                <Setter Property="FontSize" Value="12"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Subject" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Schedule" Binding="{Binding Schedule}" Width="160"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
             </Grid>
 
-            <!-- UNCHANGED: Welcome message -->
-            <TextBlock 
-                Text="{Binding WelcomeMessage}"
-                HorizontalAlignment="Left"
-                Grid.Row="2"
-                Grid.ColumnSpan="2"
-                Margin="37,5,0,0"
-                TextWrapping="Wrap"
-                VerticalAlignment="Top"
-                Foreground="White"
-                Width="706"
-                Height="30"
-                FontFamily="Verdana"
-                FontSize="22"
-                FontWeight="Bold"/>
+            <!-- RIGHT: Deadlines -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <!-- UNCHANGED: Subjects table — just shrunk to fit Row 2 -->
-            <DataGrid Grid.Row="2"
-                      Grid.ColumnSpan="2"
-                      ItemsSource="{Binding SubjectList}"
-                      AlternatingRowBackground="#22FFFFFF"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      Background="Transparent"
-                      Foreground="White"
-                      BorderBrush="#FFAC41CB"
-                      Margin="37,40,27,5"
-                      RowBackground="Transparent"
-                      GridLinesVisibility="None">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Subject"
-                                        Binding="{Binding Name}"
-                                        Width="*"/>
-                    <DataGridTextColumn Header="Schedule"
-                                        Binding="{Binding Schedule}"
-                                        Width="200"/>
-                </DataGrid.Columns>
-            </DataGrid>
-
-            <!-- NEW: Deadlines section label -->
-            <TextBlock
-                Text="Deadlines"
-                Grid.Row="3"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="37,8,0,0"
-                Foreground="White"
-                FontFamily="Verdana"
-                FontSize="16"
-                FontWeight="Bold"/>
-
-            <!-- NEW: Activities/Deadlines table -->
-            <DataGrid Grid.Row="3"
-                      Grid.ColumnSpan="2"
-                      ItemsSource="{Binding ActivityList}"
-                      SelectedItem="{Binding SelectedActivity}"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      AlternatingRowBackground="#22FFFFFF"
-                      Background="Transparent"
-                      Foreground="White"
-                      BorderBrush="#FFAC41CB"
-                      Margin="37,35,27,5"
-                      RowBackground="Transparent"
-                      GridLinesVisibility="None">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Subject"
-                                        Binding="{Binding SubjectName}"
-                                        Width="120"/>
-                    <DataGridTextColumn Header="Activity"
-                                        Binding="{Binding ActivityTitle}"
-                                        Width="*"/>
-                    <DataGridTextColumn Header="Date Posted"
-                                        Binding="{Binding DatePosted, StringFormat=\{0:MM/dd/yyyy\}}"
-                                        Width="100"/>
-                    <DataGridTextColumn Header="Deadline"
-                                        Binding="{Binding Deadline, StringFormat=\{0:MM/dd/yyyy\}}"
-                                        Width="100"/>
-                    <DataGridCheckBoxColumn Header="Done"
-                                            Binding="{Binding IsCompleted}"
-                                            Width="50"/>
-                </DataGrid.Columns>
-            </DataGrid>
-
-            <!-- NEW: Add activity input bar at the bottom -->
-            <Border Grid.Row="4"
-                    Grid.ColumnSpan="2"
-                    Background="#CC110C57"
-                    Padding="10,5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                    <TextBox Text="{Binding NewActivity.SubjectName, UpdateSourceTrigger=PropertyChanged}"
-                             Width="120"
-                             Height="24"
-                             Margin="5,0"
-                             FontFamily="Century Gothic"
-                             ToolTip="Subject Name"/>
-
-                    <TextBox Text="{Binding NewActivity.ActivityTitle, UpdateSourceTrigger=PropertyChanged}"
-                             Width="180"
-                             Height="24"
-                             Margin="5,0"
-                             FontFamily="Century Gothic"
-                             ToolTip="Activity Title"/>
-
-                    <DatePicker SelectedDate="{Binding NewActivity.Deadline}"
-                                Width="130"
-                                Height="24"
-                                Margin="5,0"
-                                ToolTip="Deadline Date"/>
-
-                    <Button Content="Add"
-                            Command="{Binding AddActivityCommand}"
-                            Height="24"
-                            Margin="5,0"
-                            Padding="10,0"
-                            FontFamily="Century Gothic"/>
-
-                    <Button Content="Mark Done"
-                            Command="{Binding ToggleCompleteCommand}"
-                            Height="24"
-                            Margin="5,0"
-                            Padding="10,0"
-                            FontFamily="Century Gothic"/>
-
-                    <Button Content="Delete"
-                            Command="{Binding DeleteActivityCommand}"
-                            Height="24"
-                            Margin="5,0"
-                            Padding="10,0"
-                            FontFamily="Century Gothic"/>
-
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="DEADLINES &amp; ACTIVITIES" Style="{StaticResource SectionLabel}"/>
+                    <TextBlock Text="Track your upcoming tasks" FontFamily="Century Gothic"
+                               FontSize="15" FontWeight="Bold" Foreground="White"/>
+                    <Rectangle Height="2" Width="50" HorizontalAlignment="Left" Margin="0,6,0,0">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#CC77FF" Offset="0"/>
+                                <GradientStop Color="#00CC77FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
                 </StackPanel>
-            </Border>
 
+                <Border Grid.Row="2" CornerRadius="12" BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#DD110C57" Offset="0"/>
+                            <GradientStop Color="#DD1A0F70" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#55AC41CB" Offset="0"/>
+                            <GradientStop Color="#11AC41CB" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border.Effect>
+                        <DropShadowEffect Color="#AC41CB" BlurRadius="20"
+                                          ShadowDepth="0" Opacity="0.25"/>
+                    </Border.Effect>
+
+                    <DataGrid ItemsSource="{Binding ActivityList}"
+                              SelectedItem="{Binding SelectedActivity}"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              Background="Transparent"
+                              RowBackground="Transparent"
+                              AlternatingRowBackground="#11FFFFFF"
+                              Foreground="White"
+                              BorderThickness="0"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="#15FFFFFF"
+                              RowHeight="38" >
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                             Color="#44AC41CB"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                                             Color="White"/>
+                        </DataGrid.Resources>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="FontFamily" Value="Century Gothic"/>
+                                <Setter Property="FontSize" Value="12"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Subject"
+                                               Binding="{Binding SubjectName}" Width="90"/>
+                            <DataGridTextColumn Header="Activity"
+                                               Binding="{Binding ActivityTitle}" Width="*"/>
+                            <DataGridTextColumn Header="Deadline"
+                                               Binding="{Binding Deadline, StringFormat=\{0:MM/dd/yy\}}"
+                                               Width="75"/>
+                            <DataGridCheckBoxColumn Header="Done"
+                                                   Binding="{Binding IsCompleted}" Width="55"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Grid>
         </Grid>
+
+        <!-- BOTTOM: Add activity bar -->
+        <Border Grid.Row="2" Background="#EE0A0730" BorderThickness="0,1,0,0"
+                Padding="30,12">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00AC41CB" Offset="0"/>
+                    <GradientStop Color="#55AC41CB" Offset="0.5"/>
+                    <GradientStop Color="#00AC41CB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="ADD ACTIVITY"
+                           FontFamily="Cascadia Code SemiBold" FontSize="10"
+                           FontWeight="Bold" Foreground="#AC41CB"
+                           VerticalAlignment="Center" Margin="0,0,16,0"/>
+
+                <TextBox Grid.Column="1"
+                         Text="{Binding NewActivity.SubjectName, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource InputBox}"
+                         ToolTip="Subject Name"/>
+
+                <TextBox Grid.Column="3"
+                         Text="{Binding NewActivity.ActivityTitle, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource InputBox}"
+                         ToolTip="Activity Title"/>
+
+                <DatePicker Grid.Column="5"
+                            SelectedDate="{Binding NewActivity.Deadline}"
+                            Foreground="White" FontFamily="Century Gothic"
+                            Background="#22FFFFFF" BorderBrush="#33AC41CB"
+                            Width="130" Height="32" ToolTip="Deadline"/>
+
+                <!-- ADD button -->
+                <Button Grid.Column="7" Command="{Binding AddActivityCommand}"
+                        Width="70" Height="32" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
+                                    BorderBrush="#55AC41CB">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#7B2FBE" Offset="0"/>
+                                        <GradientStop Color="#AC41CB" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <TextBlock Text="ADD" FontFamily="Century Gothic"
+                                           FontSize="11" FontWeight="Bold" Foreground="White"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="btn" Property="Opacity" Value="0.85"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- MARK DONE button -->
+                <Button Grid.Column="9" Command="{Binding ToggleCompleteCommand}"
+                        Width="90" Height="32" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
+                                    BorderBrush="#331A6090" Background="#221A6090">
+                                <TextBlock Text="MARK DONE" FontFamily="Century Gothic"
+                                           FontSize="11" FontWeight="Bold" Foreground="#88BBFF"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="btn" Property="Background" Value="#441A6090"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- DELETE button -->
+                <Button Grid.Column="11" Command="{Binding DeleteActivityCommand}"
+                        Width="70" Height="32" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
+                                    BorderBrush="#338B1A2A" Background="#228B1A2A">
+                                <TextBlock Text="DELETE" FontFamily="Century Gothic"
+                                           FontSize="11" FontWeight="Bold" Foreground="#FF8888"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="btn" Property="Background" Value="#448B1A2A"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

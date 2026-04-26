@@ -3,211 +3,216 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="ProfileWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="Profile — Poodle" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#BBFFFFFF"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bdr" Background="Transparent"
+                                BorderThickness="0,0,0,2" BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bdr" Property="BorderBrush" Value="#AC41CB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="NavButtonActive" TargetType="Button" BasedOn="{StaticResource NavButton}">
+            <Setter Property="Foreground" Value="#CC77FF"/>
+        </Style>
+        <Style x:Key="NavButtonDanger" TargetType="Button" BasedOn="{StaticResource NavButton}">
+            <Setter Property="Foreground" Value="#FFAA88"/>
+        </Style>
+
+        <Style x:Key="ProfileFieldLabel" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#9988BB"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ProfileFieldValue" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="131*"/>
-            <ColumnDefinition Width="29*"/>
-        </Grid.ColumnDefinitions>
-
         <Grid.Background>
-            <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
+            <ImageBrush ImageSource="..\Images\backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
+        <!--<Rectangle Fill="#99050316"/>-->
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <!-- NAV BAR -->
+        <Border Grid.Row="0" Background="#CC0A0730" BorderThickness="0,0,0,1">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00AC41CB" Offset="0"/>
+                    <GradientStop Color="#FFAC41CB" Offset="0.5"/>
+                    <GradientStop Color="#00AC41CB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Command="{Binding Navigation.GoToMainDashboardCommand}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter/>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Source="../Images/P-removebg-preview.png" Width="28" Height="28"/>
+                </Button>
+                <TextBlock Grid.Column="1" Text="POODLE" VerticalAlignment="Center"
+                           FontFamily="Cascadia Code SemiBold" FontSize="13"
+                           FontWeight="Bold" Foreground="#CC77FF"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal"
+                            VerticalAlignment="Center" Margin="0,0,16,0">
+                    <Button Content="Subjects" Command="{Binding Navigation.GoToSubjectsCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Grades" Command="{Binding Navigation.GoToGradesCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Profile" Style="{StaticResource NavButtonActive}"/>
+                    <Button Content="Logout" Command="{Binding Navigation.LogoutCommand}"
+                            Style="{StaticResource NavButtonDanger}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- BODY -->
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="420"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="HomeButton" 
-                    Grid.Column="0" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    BorderBrush="{x:Null}"
-                    Command="{Binding Navigation.GoToMainDashboardCommand}"
-                    Width="40" 
-                    Height="40">
-                <Button.Content>
-                    <Image x:Name="HOME_PAGE_BUTTON" 
-                           Source="../Images/P-removebg-preview.png" 
-                           Width="30" 
-                           Height="30"/>
-                </Button.Content>
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <ContentPresenter/>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
 
+                <!-- Page heading -->
+                <TextBlock Text="MY PROFILE" FontFamily="Cascadia Code SemiBold"
+                           FontSize="10" FontWeight="Bold" Foreground="#AC41CB"
+                           HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                <TextBlock Text="{Binding WelcomeMessage}" FontFamily="Century Gothic"
+                           FontSize="16" FontWeight="Bold" Foreground="White"
+                           HorizontalAlignment="Center" TextWrapping="Wrap"
+                           TextAlignment="Center" Margin="0,0,0,20"/>
 
-            <Menu Grid.Column="3" 
-                  HorizontalAlignment="Center" 
-                  Background="{x:Null}">
-                <MenuItem x:Name="SubjectsMenu" 
-                          Header="Subjects"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          Command="{Binding Navigation.GoToSubjectsCommand}"/>
-            </Menu>
+                <!-- Avatar -->
+                <Border Width="72" Height="72" CornerRadius="36"
+                        Background="#FF110C57" HorizontalAlignment="Center"
+                        Margin="0,0,0,20" BorderThickness="2" BorderBrush="#55AC41CB">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#AC41CB" BlurRadius="20"
+                                          ShadowDepth="0" Opacity="0.5"/>
+                    </Border.Effect>
+                    <TextBlock Text="👤" FontSize="36"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
 
-            <Menu Grid.Column="4" 
-                  HorizontalAlignment="Center" 
-                  Background="{x:Null}">
-                <MenuItem x:Name="GradesMenu" 
-                          Header="Grades"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          Command="{Binding Navigation.GoToGradesCommand}"/>
-            </Menu>
+                <!-- Info card -->
+                <Border CornerRadius="16" Padding="32,24" BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#EE110C57" Offset="0"/>
+                            <GradientStop Color="#EE1A0F70" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#55AC41CB" Offset="0"/>
+                            <GradientStop Color="#11AC41CB" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border.Effect>
+                        <DropShadowEffect Color="#AC41CB" BlurRadius="24"
+                                          ShadowDepth="0" Opacity="0.3"/>
+                    </Border.Effect>
 
-            <Menu Grid.Column="5" HorizontalAlignment="Center" Background="{x:Null}">
-                <MenuItem x:Name="ProfileMenu" Header="Profile"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12"
-                          />
-            </Menu>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
 
-            <Menu Grid.Column="6" HorizontalAlignment="Center" Background="{x:Null}">
-                <MenuItem x:Name="LogoutWindow_Dashboard" 
-                          Header="Logout"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          Command="{Binding Navigation.LogoutCommand}"/>
-            </Menu>
+                        <!-- Dividers -->
+                        <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Fill="#15FFFFFF"/>
+                        <Rectangle Grid.Row="3" Grid.ColumnSpan="2" Fill="#15FFFFFF"/>
+                        <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Fill="#15FFFFFF"/>
+                        <Rectangle Grid.Row="7" Grid.ColumnSpan="2" Fill="#15FFFFFF"/>
+
+                        <!-- Row 0: Username -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="USERNAME"
+                                   Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                   Text="{Binding CurrentUser.Username}"
+                                   Style="{StaticResource ProfileFieldValue}"/>
+
+                        <!-- Row 2: Student ID -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="STUDENT ID"
+                                   Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding StudentId}"
+                                   Style="{StaticResource ProfileFieldValue}"/>
+
+                        <!-- Row 4: Course -->
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="COURSE"
+                                   Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Course}"
+                                   Style="{StaticResource ProfileFieldValue}"/>
+
+                        <!-- Row 6: Year/Section -->
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="YEAR / SECTION"
+                                   Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding YearSection}"
+                                   Style="{StaticResource ProfileFieldValue}"/>
+
+                        <!-- Row 8: Email -->
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="EMAIL"
+                                   Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Email}"
+                                   Style="{StaticResource ProfileFieldValue}"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
         </Grid>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Width="450">
-
-            <Border Width="80" Height="80"
-            CornerRadius="40"
-            Background="#FF110C57"
-            HorizontalAlignment="Center"
-            Margin="0,0,0,15">
-                <TextBlock Text="👤"
-                   FontSize="40"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
-            </Border>
-
-            <Border Background="#CC110C57" CornerRadius="10" Padding="30">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="130"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" 
-                               Text="Username:"    
-                               Foreground="White" 
-                               FontFamily="Century Gothic" 
-                               VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="1" 
-                               Text="Student ID:"  
-                               Foreground="White"                              
-                               FontFamily="Century Gothic" 
-                               VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="2" 
-                               Text="Course:"      
-                               Foreground="White" 
-                               FontFamily="Century Gothic" 
-                               VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="3" 
-                               Text="Year/Section:" 
-                               Foreground="White" 
-                               FontFamily="Century Gothic" 
-                               VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="4" 
-                               Text="Email:"       
-                               Foreground="White" 
-                               FontFamily="Century Gothic" 
-                               VerticalAlignment="Center"/>
-
-                    <TextBlock 
-                        Grid.Row="0" 
-                        Grid.Column="1" 
-                        Text="{Binding CurrentUser.Username}" 
-                        Foreground="White" 
-                        FontFamily="Century Gothic" 
-                        VerticalAlignment="Center"/>
-                    <TextBlock 
-                        Grid.Row="1" 
-                        Grid.Column="1" 
-                        Text="{Binding StudentId}"            
-                        Foreground="White" 
-                        FontFamily="Century Gothic" 
-                        VerticalAlignment="Center"/>
-                    <TextBlock 
-                        Grid.Row="2" 
-                        Grid.Column="1" 
-                        Text="{Binding Course}"               
-                        Foreground="White" 
-                        FontFamily="Century Gothic" 
-                        VerticalAlignment="Center"/>
-                    <TextBlock 
-                        Grid.Row="3" 
-                        Grid.Column="1" 
-                        Text="{Binding YearSection}"          
-                        Foreground="White" 
-                        FontFamily="Century Gothic" 
-                        VerticalAlignment="Center"/>
-                    <TextBlock 
-                        Grid.Row="4" 
-                        Grid.Column="1" 
-                        Text="{Binding Email}"                
-                        Foreground="White" 
-                        FontFamily="Century Gothic" 
-                        VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-
-        </StackPanel>
-        <TextBlock 
-            Text="{Binding WelcomeMessage}"
-            Grid.Row="2"
-            HorizontalAlignment="Left"
-            Margin="37,20,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Foreground="White" RenderTransformOrigin="0.5,0.5" Width="693" Height="66" FontFamily="Verdana" FontSize="22" FontWeight="Bold">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
-
     </Grid>
 </Window>

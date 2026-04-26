@@ -3,199 +3,351 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="Window1" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="Poodle" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#BBFFFFFF"/>
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bdr" Background="Transparent"
+                                BorderThickness="0,0,0,2" BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bdr" Property="BorderBrush" Value="#AC41CB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NavButtonDanger" TargetType="Button" BasedOn="{StaticResource NavButton}">
+            <Setter Property="Foreground" Value="#FFAA88"/>
+        </Style>
+
+        <Style x:Key="CardLabel" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Century Gothic"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#9988BB"/>
+        </Style>
+    </Window.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="50*"/>
-        </Grid.ColumnDefinitions>
+        <!-- Background image -->
         <Grid.Background>
-            <ImageBrush ImageSource="..\Images\backgroundImage.jpg"/>
+            <ImageBrush ImageSource="..\Images\backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
+        <!-- Dark overlay -->
+        
+        <!--<Rectangle Fill="#99050316"/>-->
+
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
-            </Grid.ColumnDefinitions>
+        <!-- ══════════════════════════════════
+             NAV BAR
+             ══════════════════════════════════ -->
+        <Border Grid.Row="0" Background="#CC0A0730" BorderThickness="0,0,0,1">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00AC41CB" Offset="0"/>
+                    <GradientStop Color="#FFAC41CB" Offset="0.5"/>
+                    <GradientStop Color="#00AC41CB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
 
-            <Button x:Name="HomeButton" 
-                    Grid.Column="0" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    BorderBrush="{x:Null}"
-                    Command="{Binding Navigation.GoToMainDashboardCommand}"
-                    Width="40" 
-                    Height="40">
-                <Button.Content>
-                    <Image x:Name="HOME_PAGE_BUTTON" 
-                           Source="../Images/P-removebg-preview.png" 
-                           Width="30" 
-                           Height="30"/>
-                </Button.Content>
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <ContentPresenter/>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Menu Grid.Column="3" 
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Background="{x:Null}">
-                <MenuItem x:Name="SubjectsWindow" 
-                          Header="Subjects"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          Command="{Binding Navigation.GoToSubjectsCommand}" FontFamily="Century Gothic"/>
-            </Menu>
+                <!-- Logo button -->
+                <Button Grid.Column="0"
+                        Command="{Binding Navigation.GoToMainDashboardCommand}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter/>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Source="../Images/P-removebg-preview.png" Width="28" Height="28"/>
+                </Button>
 
-            <Menu Grid.Column="4" 
-                  HorizontalAlignment="Center" 
-                  VerticalAlignment="Center"
-                  Background="{x:Null}">
-                <MenuItem x:Name="GradesWindow" 
-                          Header="Grades"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          Command="{Binding Navigation.GoToGradesCommand}"/>
-            </Menu>
+                <!-- App name -->
+                <TextBlock Grid.Column="1" Text="POODLE" VerticalAlignment="Center"
+                           FontFamily="Cascadia Code SemiBold" FontSize="13"
+                           FontWeight="Bold" Foreground="#CC77FF"/>
 
-            <Menu Grid.Column="5" 
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Background="{x:Null}">
-                <MenuItem x:Name="ProfileWindow" Header="Profile"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12"
-                          Command="{Binding Navigation.GoToProfileCommand}"/>
-            </Menu>
+                <!-- Nav links -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal"
+                            VerticalAlignment="Center" Margin="0,0,16,0">
+                    <Button Content="Subjects"
+                            Command="{Binding Navigation.GoToSubjectsCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Grades"
+                            Command="{Binding Navigation.GoToGradesCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Profile"
+                            Command="{Binding Navigation.GoToProfileCommand}"
+                            Style="{StaticResource NavButton}"/>
+                    <Button Content="Logout"
+                            Command="{Binding Navigation.LogoutCommand}"
+                            Style="{StaticResource NavButtonDanger}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-            <Menu Grid.Column="6" 
-                  HorizontalAlignment="Center" 
-                  VerticalAlignment="Center"
-                  Background="{x:Null}">
-                <MenuItem x:Name="LogoutWindow_Dashboard" 
-                          Header="Logout"
-                          Foreground="White"
-                          FontWeight="Bold"
-                          FontSize="12" 
-                          Command="{Binding Navigation.LogoutCommand}"/>
-            </Menu>
+        <!-- ══════════════════════════════════
+             MAIN CONTENT
+             ══════════════════════════════════ -->
+        <Grid Grid.Row="1" Margin="50,30,50,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Heading -->
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="DASHBOARD" FontFamily="Cascadia Code SemiBold"
+                           FontSize="10" FontWeight="Bold" Foreground="#AC41CB"
+                           Margin="0,0,0,4"/>
+                <TextBlock Text="{Binding WelcomeMessage}" FontFamily="Century Gothic"
+                           FontSize="22" FontWeight="Bold" Foreground="White"
+                           TextWrapping="Wrap"/>
+                <Rectangle Height="2" Width="60" HorizontalAlignment="Left" Margin="0,8,0,0">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#CC77FF" Offset="0"/>
+                            <GradientStop Color="#00CC77FF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </StackPanel>
+
+            <!-- ══════════════════════════════════
+                 THREE CARDS
+                 ══════════════════════════════════ -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- ── Card 1: Total Subjects ── -->
+                <Border Grid.Column="0" CornerRadius="16" Padding="28,24" BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#EE110C57" Offset="0"/>
+                            <GradientStop Color="#EE1A0F70" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#55AC41CB" Offset="0"/>
+                            <GradientStop Color="#11AC41CB" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border.Effect>
+                        <DropShadowEffect Color="#AC41CB" BlurRadius="24"
+                                          ShadowDepth="0" Opacity="0.35"/>
+                    </Border.Effect>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Width="40" Height="40" CornerRadius="20"
+                                Background="#33CC77FF" HorizontalAlignment="Left"
+                                Margin="0,0,0,16">
+                            <TextBlock Text="📚" FontSize="18"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <TextBlock Grid.Row="1" Text="{Binding TotalSubjects}"
+                                   FontFamily="Cascadia Code SemiBold" FontSize="56"
+                                   FontWeight="Bold" Foreground="White"
+                                   HorizontalAlignment="Left"/>
+
+                        <StackPanel Grid.Row="2" Margin="0,8,0,0">
+                            <TextBlock Text="TOTAL SUBJECTS" Style="{StaticResource CardLabel}"/>
+                            <Rectangle Height="1" Fill="#AC41CB" Opacity="0.3" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- ── Card 2: Average Grade ── -->
+                <Border Grid.Column="2" CornerRadius="16" Padding="28,24" BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#EE110C57" Offset="0"/>
+                            <GradientStop Color="#EE0F1A70" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#554169E1" Offset="0"/>
+                            <GradientStop Color="#114169E1" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border.Effect>
+                        <DropShadowEffect Color="#4169E1" BlurRadius="24"
+                                          ShadowDepth="0" Opacity="0.3"/>
+                    </Border.Effect>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Width="40" Height="40" CornerRadius="20"
+                                Background="#334169E1" HorizontalAlignment="Left"
+                                Margin="0,0,0,16">
+                            <TextBlock Text="📊" FontSize="18"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <TextBlock Grid.Row="1" Text="{Binding AverageGrade}"
+                                   FontFamily="Cascadia Code SemiBold" FontSize="56"
+                                   FontWeight="Bold" Foreground="White"
+                                   HorizontalAlignment="Left"/>
+
+                        <StackPanel Grid.Row="2" Margin="0,8,0,0">
+                            <TextBlock Text="AVERAGE GRADE" Style="{StaticResource CardLabel}"/>
+                            <Rectangle Height="1" Fill="#4169E1" Opacity="0.3" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- ── Card 3: Target Grade ── -->
+                <Border Grid.Column="4" CornerRadius="16" Padding="28,24" BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#EE110C57" Offset="0"/>
+                            <GradientStop Color="#EE0F5040" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#5500CC88" Offset="0"/>
+                            <GradientStop Color="#1100CC88" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Border.Effect>
+                        <DropShadowEffect Color="#00CC88" BlurRadius="24"
+                                          ShadowDepth="0" Opacity="0.25"/>
+                    </Border.Effect>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Width="40" Height="40" CornerRadius="20"
+                                Background="#3300CC88" HorizontalAlignment="Left"
+                                Margin="0,0,0,16">
+                            <TextBlock Text="🎯" FontSize="18"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <Border Grid.Row="1" CornerRadius="8" Padding="10,4"
+                                Background="#22FFFFFF">
+                            <TextBox Text="{Binding TargetGrade, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Cascadia Code SemiBold" FontSize="48"
+                                     FontWeight="Bold" Foreground="White"
+                                     Background="Transparent" BorderThickness="0"
+                                     CaretBrush="White" VerticalContentAlignment="Center"/>
+                        </Border>
+
+                        <StackPanel Grid.Row="2" Margin="0,8,0,0">
+                            <TextBlock Text="TARGET GRADE" Style="{StaticResource CardLabel}"/>
+                            <Rectangle Height="1" Fill="#00CC88" Opacity="0.3" Margin="0,6,0,0"/>
+
+                            <Button Command="{Binding SaveTargetGradeCommand}"
+                                    Margin="0,10,0,0" Height="32" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="btn" CornerRadius="6" BorderThickness="1"
+                                                BorderBrush="#4400CC88">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="#3300CC88" Offset="0"/>
+                                                    <GradientStop Color="#2200AA66" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <TextBlock Text="SET TARGET"
+                                                       FontFamily="Century Gothic" FontSize="10"
+                                                       FontWeight="Bold" Foreground="White"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="btn" Property="Background"
+                                                        Value="#4400CC88"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+            </Grid>
         </Grid>
 
-        <!-- ==================== CARDS ROW ==================== -->
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-            <!-- UNCHANGED: Total Subjects card -->
-            <Border Background="#FF110C57" CornerRadius="10" Padding="30,20" Margin="20">
-                <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Total Subjects"
-                               Foreground="White"
-                               FontFamily="Century Gothic"
-                               FontSize="14"
-                               HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding TotalSubjects}"
-                               Foreground="White"
-                               FontFamily="Century Gothic"
-                               FontSize="40"
-                               FontWeight="Bold"
-                               HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Border>
-
-            <!-- UNCHANGED: Average Grade card -->
-            <Border Background="#FF110C57" CornerRadius="10" Padding="30,20" Margin="20">
-                <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Average Grade"
-                               Foreground="White"
-                               FontFamily="Century Gothic"
-                               FontSize="14"
-                               HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding AverageGrade}"
-                               Foreground="White"
-                               FontFamily="Century Gothic"
-                               FontSize="40"
-                               FontWeight="Bold"
-                               HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Border>
-
-            <!-- NEW: Target Grade card -->
-            <Border Background="#FF110C57" CornerRadius="10" Padding="30,20" Margin="20">
-                <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Target Grade"
-                               Foreground="White"
-                               FontFamily="Century Gothic"
-                               FontSize="14"
-                               HorizontalAlignment="Center"/>
-                    <TextBox Text="{Binding TargetGrade, UpdateSourceTrigger=PropertyChanged}"
-                             Width="100"
-                             FontSize="32"
-                             FontWeight="Bold"
-                             TextAlignment="Center"
-                             Margin="0,5,0,5"/>
-                    <Button Content="Set Target"
-                            Command="{Binding SaveTargetGradeCommand}"
-                            FontFamily="Century Gothic"
-                            FontSize="11"
-                            Padding="8,3"/>
-                </StackPanel>
-            </Border>
-
-        </StackPanel>
-
-        <!-- NEW: Grade status message below the cards -->
-        <TextBlock Text="{Binding GradeStatusMessage}"
-                   Grid.Row="2"
-                   Grid.ColumnSpan="2"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Bottom"
-                   Margin="0,0,0,20"
-                   Foreground="White"
-                   FontFamily="Century Gothic"
-                   FontSize="13"/>
-
-        <!-- UNCHANGED: Welcome message -->
-        <TextBlock 
-            Text="{Binding WelcomeMessage}"
-            HorizontalAlignment="Left"
-            Margin="37,20,0,0"
-            Grid.Row="2"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Foreground="White" RenderTransformOrigin="0.5,0.5" Width="496" Height="66" FontFamily="Verdana" FontSize="22" FontWeight="Bold">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
+        <!-- ══════════════════════════════════
+             STATUS BAR
+             ══════════════════════════════════ -->
+        <Border Grid.Row="2" Background="#CC0A0730" Padding="50,12" BorderThickness="0,1,0,0">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00AC41CB" Offset="0"/>
+                    <GradientStop Color="#44AC41CB" Offset="0.5"/>
+                    <GradientStop Color="#00AC41CB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <TextBlock Text="{Binding GradeStatusMessage}"
+                       FontFamily="Century Gothic" FontSize="12"
+                       Foreground="#CCFFFFFF" HorizontalAlignment="Center"/>
+        </Border>
 
     </Grid>
 </Window>
