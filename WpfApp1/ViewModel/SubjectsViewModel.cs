@@ -234,7 +234,7 @@ namespace WpfApp1.ViewModel
                         cmd.Parameters.AddWithValue("@ActivityId", SelectedActivity.ActivityId);
                         int rows = await cmd.ExecuteNonQueryAsync();
 
-                        // Only remove from UI list if DB delete actually worked
+                        
                         if (rows > 0)
                         {
                             ActivityList.Remove(SelectedActivity);

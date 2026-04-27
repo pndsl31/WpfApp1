@@ -81,5 +81,18 @@ namespace WpfApp1.Model
                 }
             }
         }
+        private int _units = 3;
+        public int Units
+        {
+            get { return _units; }
+            set
+            {
+                if (_units != value)
+                {
+                    _units = value;
+                    OnPropertyCHanged(nameof(Units));
+                }
+            }
+        }
     }
 }

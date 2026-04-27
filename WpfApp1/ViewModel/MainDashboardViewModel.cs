@@ -66,8 +66,8 @@ namespace WpfApp1.ViewModel
                 {
                     await connection.OpenAsync();
 
-                    // Get average grade from table1
-                    string avgQuery = "SELECT AVG(CAST(Grades AS FLOAT)) FROM table1";
+                    // computation of the average taking the units to account as well
+                    string avgQuery = "SELECT SUM(CAST(Grades AS FLOAT) * Units) / SUM(Units) FROM table1";
                     using (SqlCommand cmd = new SqlCommand(avgQuery, connection))
                     {
                         var result = await cmd.ExecuteScalarAsync();
@@ -78,7 +78,7 @@ namespace WpfApp1.ViewModel
                         }
                     }
 
-                    // Get total subjects
+                    // total subjects count
                     string countQuery = "SELECT COUNT(DISTINCT Subject) FROM table1";
                     using (SqlCommand cmd = new SqlCommand(countQuery, connection))
                     {
@@ -86,7 +86,7 @@ namespace WpfApp1.ViewModel
                         TotalSubjects = Convert.ToInt32(result);
                     }
 
-                    // Get saved target grade
+                    // target grade 
                     string targetQuery = "SELECT TargetGrade FROM UserSettings WHERE Username = @Username";
                     using (SqlCommand cmd = new SqlCommand(targetQuery, connection))
                     {
@@ -121,7 +121,7 @@ namespace WpfApp1.ViewModel
                 {
                     await connection.OpenAsync();
 
-                    // MERGE so it inserts or updates depending on if row exists
+                    
                     string query = @"
                         IF EXISTS (SELECT 1 FROM UserSettings WHERE Username = @Username)
                             UPDATE UserSettings SET TargetGrade = @TargetGrade WHERE Username = @Username
@@ -150,9 +150,9 @@ namespace WpfApp1.ViewModel
             if (double.TryParse(AverageGrade, out double avg) && double.TryParse(TargetGrade, out double target))
             {
                 if (avg >= target)
-                    GradeStatusMessage = $"✅ You are meeting your target of {target}!";
+                    GradeStatusMessage = $" You are meeting your target of {target}!";
                 else
-                    GradeStatusMessage = $"⚠️ You need {(target - avg):F2} more points to hit your target of {target}.";
+                    GradeStatusMessage = $" You need {(target - avg):F2} more points to hit your target of {target}.";
             }
             else
             {

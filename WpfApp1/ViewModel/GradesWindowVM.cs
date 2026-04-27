@@ -39,15 +39,14 @@ namespace WpfApp1.ViewModel
             ClearCommand = new RelayCommand(ExecuteClearCommand);
             UpdateCommand = new AsyncRelayCommand(ExecuteUpdateCommand);
 
-            // FIX: use discard so the compiler doesn't warn about unawaited async
-            _ = LoadItemsFromFile();
+
+            LoadItemsFromFile();
         }
 
-        // ─── Save ─────────────────────────────────────────────────────────────
+        //  Save command
 
         public async Task ExecuteSaveCommand(object? par)
         {
-            // ── Input validation ──────────────────────────────────────────────
             if (string.IsNullOrWhiteSpace(newAccount.ID))
             {
                 MessageBox.Show("ID cannot be empty.", "Validation Error",
@@ -75,7 +74,13 @@ namespace WpfApp1.ViewModel
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            // ─────────────────────────────────────────────────────────────────
+            // 
+            if (!int.TryParse(newAccount.Units.ToString(), out int unitValue) || unitValue < 1 || unitValue > 6)
+            {
+                MessageBox.Show("Units must be a whole number between 1 and 6.", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             table1 newGrade = new table1
             {
@@ -83,7 +88,8 @@ namespace WpfApp1.ViewModel
                 Subject = newAccount.Subject,
                 Grades = newAccount.Grades,
                 DateReported = newAccount.DateReported,
-                IsComplete = newAccount.IsComplete
+                IsComplete = newAccount.IsComplete,
+                Units = newAccount.Units
             };
 
             try
@@ -91,31 +97,22 @@ namespace WpfApp1.ViewModel
                 using (SqlConnection connection = new SqlConnection(_conn))
                 {
                     await connection.OpenAsync();
-                    string query = "INSERT INTO table1 (ID, Subject, Grades, DateReported, IsComplete) VALUES (@ID, @Subject, @Grades, @DateReported, @IsComplete)";
+                    string query = "INSERT INTO table1 (ID, Subject, Grades, DateReported, IsComplete, Units) " +
+               "VALUES (@ID, @Subject, @Grades, @DateReported, @IsComplete, @Units)";
+
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@ID", newGrade.ID);
-                        command.Parameters.AddWithValue("@Subject", newGrade.Subject);
-                        command.Parameters.AddWithValue("@Grades", newGrade.Grades);
-                        command.Parameters.AddWithValue("@DateReported", newGrade.DateReported);
-                        command.Parameters.AddWithValue("@IsComplete", newGrade.IsComplete);
+                        command.Parameters.AddWithValue("@ID", newAccount.ID);
+                        command.Parameters.AddWithValue("@Subject", newAccount.Subject);
+                        command.Parameters.AddWithValue("@Grades", newAccount.Grades);
+                        command.Parameters.AddWithValue("@DateReported", newAccount.DateReported);
+                        command.Parameters.AddWithValue("@IsComplete", newAccount.IsComplete);
+                        command.Parameters.AddWithValue("@Units", newAccount.Units);  
 
-                        int rowsAffected = await command.ExecuteNonQueryAsync();
-
-                        if (rowsAffected > 0)
-                        {
-                            // Only add to UI list after DB confirms success
-                            table1List.Add(newGrade);
-                            MessageBox.Show("Record successfully added.", "Success",
-                                MessageBoxButton.OK, MessageBoxImage.Information);
-
-                            // Clear input fields
-                            newAccount.ID = "";
-                            newAccount.Subject = "";
-                            newAccount.Grades = "";
-                            newAccount.DateReported = DateTime.Now;
-                            newAccount.IsComplete = true;
-                        }
+                        await command.ExecuteNonQueryAsync();
+                        table1List.Add(newGrade); 
+                        MessageBox.Show("Record added.", "Success",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
             }
@@ -126,7 +123,7 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        // ─── Selected Item ────────────────────────────────────────────────────
+        // select command
 
         private table1 _selectedItem;
         public table1 SelectedItem
@@ -143,11 +140,12 @@ namespace WpfApp1.ViewModel
                     newAccount.Grades = SelectedItem.Grades;
                     newAccount.DateReported = SelectedItem.DateReported;
                     newAccount.IsComplete = SelectedItem.IsComplete;
+                    newAccount.Units = SelectedItem.Units;
                 }
             }
         }
 
-        // ─── Delete ───────────────────────────────────────────────────────────
+        // delete command
 
         private async Task ExecuteDeleteCommand(object? par)
         {
@@ -194,7 +192,7 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        // ─── Clear ────────────────────────────────────────────────────────────
+        // clear command
 
         public void ExecuteClearCommand(object? par)
         {
@@ -203,9 +201,11 @@ namespace WpfApp1.ViewModel
             newAccount.Grades = string.Empty;
             newAccount.DateReported = DateTime.Now;
             newAccount.IsComplete = true;
+            newAccount.Units = 3;
+
         }
 
-        // ─── Update ───────────────────────────────────────────────────────────
+        // update command
 
         private async Task ExecuteUpdateCommand(object? par)
         {
@@ -235,7 +235,9 @@ namespace WpfApp1.ViewModel
                 using (SqlConnection connection = new SqlConnection(_conn))
                 {
                     await connection.OpenAsync();
-                    string query = "UPDATE table1 SET Subject = @Subject, Grades = @Grades, DateReported = @DateReported, IsComplete = @IsComplete WHERE ID = @ID";
+                    string query = "UPDATE table1 SET Subject = @Subject, Grades = @Grades, " +
+                                   "DateReported = @DateReported, IsComplete = @IsComplete, " +
+                                   "Units = @Units WHERE ID = @ID";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@ID", _selectedItem.ID);
@@ -243,16 +245,17 @@ namespace WpfApp1.ViewModel
                         command.Parameters.AddWithValue("@Grades", newAccount.Grades);
                         command.Parameters.AddWithValue("@DateReported", newAccount.DateReported);
                         command.Parameters.AddWithValue("@IsComplete", newAccount.IsComplete);
+                        command.Parameters.AddWithValue("@Units", newAccount.Units);
 
                         int rowsAffected = await command.ExecuteNonQueryAsync();
 
                         if (rowsAffected > 0)
-                        {
-                            // Update in-memory object after DB confirms
+                        { 
                             _selectedItem.Subject = newAccount.Subject;
                             _selectedItem.Grades = newAccount.Grades;
                             _selectedItem.DateReported = newAccount.DateReported;
                             _selectedItem.IsComplete = newAccount.IsComplete;
+                            _selectedItem.Units = newAccount.Units;
 
                             MessageBox.Show("Record updated.", "Success",
                                 MessageBoxButton.OK, MessageBoxImage.Information);
@@ -267,7 +270,7 @@ namespace WpfApp1.ViewModel
             }
         }
 
-        // ─── Load ─────────────────────────────────────────────────────────────
+        // loading of file
 
         private async Task LoadItemsFromFile()
         {
@@ -288,7 +291,8 @@ namespace WpfApp1.ViewModel
                                 Subject = reader["Subject"]?.ToString() ?? "",
                                 Grades = reader["Grades"]?.ToString() ?? "",
                                 DateReported = Convert.ToDateTime(reader["DateReported"]?.ToString() ?? DateTime.Now.ToString()),
-                                IsComplete = Convert.ToBoolean(reader["IsComplete"]?.ToString() ?? "false")
+                                IsComplete = Convert.ToBoolean(reader["IsComplete"]?.ToString() ?? "false"),
+                                Units = Convert.ToInt32(reader["Units"] ?? 3)
                             });
                         }
                     }

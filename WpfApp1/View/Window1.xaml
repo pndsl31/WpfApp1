@@ -49,7 +49,6 @@
     </Window.Resources>
 
     <Grid>
-        <!-- Background image -->
         <Grid.Background>
             <ImageBrush ImageSource="..\Images\backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
@@ -65,9 +64,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- ══════════════════════════════════
-             NAV BAR
-             ══════════════════════════════════ -->
+        <!--NAV BAR-->
         <Border Grid.Row="0" Background="#CC0A0730" BorderThickness="0,0,0,1">
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -96,12 +93,11 @@
                     <Image Source="../Images/P-removebg-preview.png" Width="28" Height="28"/>
                 </Button>
 
-                <!-- App name -->
                 <TextBlock Grid.Column="1" Text="POODLE" VerticalAlignment="Center"
                            FontFamily="Cascadia Code SemiBold" FontSize="13"
                            FontWeight="Bold" Foreground="#CC77FF"/>
 
-                <!-- Nav links -->
+                <!-- Nav buttons -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal"
                             VerticalAlignment="Center" Margin="0,0,16,0">
                     <Button Content="Subjects"
@@ -333,9 +329,7 @@
             </Grid>
         </Grid>
 
-        <!-- ══════════════════════════════════
-             STATUS BAR
-             ══════════════════════════════════ -->
+
         <Border Grid.Row="2" Background="#CC0A0730" Padding="50,12" BorderThickness="0,1,0,0">
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">

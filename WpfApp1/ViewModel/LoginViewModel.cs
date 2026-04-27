@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WpfApp1.Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfApp1.Model;
 using WpfApp1.View;
 using Microsoft.Data.SqlClient;
 
@@ -14,63 +10,85 @@ namespace WpfApp1.ViewModel
 {
     public class LoginViewModel : ObservableObject
     {
-        public UserModel CurrentUser {  get; set; }
-
+        public UserModel CurrentUser { get; set; }
         public ICommand LoginCommand { get; set; }
-        // public ICommand ForgotPasswordCommand { get; }
 
         public LoginViewModel()
         {
             CurrentUser = new UserModel();
             LoginCommand = new RelayCommand(ExecuteLogin);
-
-            //ForgotPasswordCommand = new RelayCommand(ExecuteForgotPassword);
-
-
         }
+
         private async void ExecuteLogin(object? parameter)
         {
-            var password = parameter as PasswordBox;
-            if (password != null)
+            
+            var passwordBox = parameter as PasswordBox;
+            if (passwordBox != null)
             {
-                CurrentUser.Password = password.Password;
+                CurrentUser.Password = passwordBox.Password;
             }
-            //if (CurrentUser.Username.Trim() == "admin" && CurrentUser.Password.Trim() == "1234")
-            //{ 
-            //    var loginWindow = new Window1(CurrentUser);
-            //    //loginWindow.DataContext = new Window1(CurrentUser);
-            //    loginWindow.Show();
-            //    Application.Current.MainWindow.Close();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Invalid username or password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);   
-            //}
 
-            //string connectionString = @"Server=CCL2-20;Database=poodle;User Id=sa;Password=ccl2;TrustServerCertificate=True;";
+            
+            if (string.IsNullOrWhiteSpace(CurrentUser.Username))
+            {
+                MessageBox.Show("Please enter your username.", "Validation",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(CurrentUser.Password))
+            {
+                MessageBox.Show("Please enter your password.", "Validation",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Database=poodle;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Application Name=""SQL Server Management Studio"";Command Timeout=0";
-
-            bool isLoginValid = false;
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    // THE TRADITIONAL (AND DANGEROUS) WAY: String Concatenation
-                    // We are directly pasting whatever the user typed into our database command.
-                    string query = "SELECT * FROM Users WHERE Username = @username AND Password = @password";
+                    await connection.OpenAsync();
+
+        
+                    string query = @"SELECT Username, Password, Email, 
+                                            StudentNumber, Course, YearSection 
+                                     FROM Users 
+                                     WHERE Username = @username 
+                                       AND Password = @password";
+
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@username", CurrentUser.Username);
                         command.Parameters.AddWithValue("@password", CurrentUser.Password);
 
-                        await connection.OpenAsync();
-
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
-                            if (reader.HasRows)
+                            
+                            if (await reader.ReadAsync())
                             {
-                                isLoginValid = true;
+                                
+                                //reading each column and save
+                                CurrentUser.Username = reader["Username"]?.ToString() ?? "";
+                                CurrentUser.Email = reader["Email"]?.ToString() ?? "";
+                                CurrentUser.StudentNumber = reader["StudentNumber"]?.ToString() ?? "";
+                                CurrentUser.Course = reader["Course"]?.ToString() ?? "";
+                                CurrentUser.YearSection = reader["YearSection"]?.ToString() ?? "";
+
+                                
+                                MessageBox.Show("Login Successful! Welcome.", "Success",
+                                    MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                var dashboard = new Window1(CurrentUser);
+                                dashboard.Show();
+                                Application.Current.MainWindow.Close();
+                            }
+                            else
+                            {
+                                
+                                MessageBox.Show("Invalid Username or Password.", "Error",
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                         }
                     }
@@ -78,23 +96,8 @@ namespace WpfApp1.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Database connection failed: " + ex.Message);
-                return;
-            }
-
-            if (isLoginValid)
-            {
-                MessageBox.Show("Login Successful! Welcome.", "Success",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
-                var loginWindow = new Window1(CurrentUser);
-                //loginWindow.DataContext = new Window1(CurrentUser);
-                loginWindow.Show();
-                Application.Current.MainWindow.Close();
-            }
-            else
-            {
-                MessageBox.Show("Invalid Username or Password.", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Database connection failed: " + ex.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

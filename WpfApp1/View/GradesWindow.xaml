@@ -199,42 +199,47 @@
             </Rectangle>
 
             <!-- RIGHT: Input Panel -->
+            <!-- RIGHT: Input Panel -->
             <Border Grid.Column="2" Background="#EE0A0730">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="22,24">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16,14">
                     <StackPanel>
                         <TextBlock Text="INPUT GRADES" FontFamily="Cascadia Code SemiBold"
-                                   FontSize="10" FontWeight="Bold" Foreground="#AC41CB"
-                                   Margin="0,0,0,4"/>
+                       FontSize="10" FontWeight="Bold" Foreground="#AC41CB"
+                       Margin="0,0,0,2"/>
                         <TextBlock Text="Add or edit a record" FontFamily="Century Gothic"
-                                   FontSize="12" Foreground="#9988BB" Margin="0,0,0,20"/>
+                       FontSize="11" Foreground="#9988BB" Margin="0,0,0,12"/>
 
                         <TextBlock Text="SUBJECT ID" Style="{StaticResource FormLabel}"/>
                         <TextBox Text="{Binding newAccount.ID}" Style="{StaticResource FormField}"
-                                 Margin="0,0,0,14"/>
+                     Margin="0,0,0,8"/>
 
                         <TextBlock Text="SUBJECT" Style="{StaticResource FormLabel}"/>
                         <TextBox Text="{Binding newAccount.Subject}" Style="{StaticResource FormField}"
-                                 Margin="0,0,0,14"/>
+                     Margin="0,0,0,8"/>
 
                         <TextBlock Text="GRADE (0–100)" Style="{StaticResource FormLabel}"/>
                         <TextBox Text="{Binding newAccount.Grades}" Style="{StaticResource FormField}"
-                                 Margin="0,0,0,14"/>
+                     Margin="0,0,0,8"/>
+
+                        <TextBlock Text="UNITS" Style="{StaticResource FormLabel}"/>
+                        <TextBox Text="{Binding newAccount.Units}" Style="{StaticResource FormField}"
+                     Margin="0,0,0,8"/>
 
                         <TextBlock Text="DATE REPORTED" Style="{StaticResource FormLabel}"/>
                         <DatePicker SelectedDate="{Binding newAccount.DateReported}"
-                                    Foreground="White" FontFamily="Century Gothic"
-                                    Background="#22FFFFFF" BorderBrush="#33AC41CB"
-                                    Height="34" Margin="0,0,0,22"/>
+                        Foreground="White" FontFamily="Century Gothic"
+                        Background="#22FFFFFF" BorderBrush="#33AC41CB"
+                        Height="34" Margin="0,0,0,12"/>
 
-                        <Rectangle Height="1" Fill="#22FFFFFF" Margin="0,0,0,18"/>
+                        <Rectangle Height="1" Fill="#22FFFFFF" Margin="0,0,0,10"/>
 
                         <!-- ADD -->
-                        <Button Command="{Binding SaveCommand}" Height="36"
-                                Margin="0,0,0,8" Cursor="Hand">
+                        <Button Command="{Binding SaveCommand}" Height="34"
+                    Margin="0,0,0,6" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
-                                            BorderBrush="#55AC41CB">
+                                BorderBrush="#55AC41CB">
                                         <Border.Background>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                 <GradientStop Color="#7B2FBE" Offset="0"/>
@@ -242,9 +247,8 @@
                                             </LinearGradientBrush>
                                         </Border.Background>
                                         <TextBlock Text="ADD RECORD" FontFamily="Century Gothic"
-                                                   FontSize="11" FontWeight="Bold" Foreground="White"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
+                                       FontSize="11" FontWeight="Bold" Foreground="White"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
@@ -256,16 +260,15 @@
                         </Button>
 
                         <!-- UPDATE -->
-                        <Button Command="{Binding UpdateCommand}" Height="36"
-                                Margin="0,0,0,8" Cursor="Hand">
+                        <Button Command="{Binding UpdateCommand}" Height="34"
+                    Margin="0,0,0,6" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
-                                            BorderBrush="#331A6090" Background="#221A6090">
+                                BorderBrush="#331A6090" Background="#221A6090">
                                         <TextBlock Text="UPDATE RECORD" FontFamily="Century Gothic"
-                                                   FontSize="11" FontWeight="Bold" Foreground="#88BBFF"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
+                                       FontSize="11" FontWeight="Bold" Foreground="#88BBFF"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
@@ -284,15 +287,14 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" Command="{Binding DeleteCommand}"
-                                    Height="36" Cursor="Hand">
+                        Height="34" Cursor="Hand">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
-                                                BorderBrush="#338B1A2A" Background="#228B1A2A">
+                                    BorderBrush="#338B1A2A" Background="#228B1A2A">
                                             <TextBlock Text="DELETE" FontFamily="Century Gothic"
-                                                       FontSize="11" FontWeight="Bold" Foreground="#FF8888"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"/>
+                                           FontSize="11" FontWeight="Bold" Foreground="#FF8888"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
@@ -303,15 +305,14 @@
                                 </Button.Template>
                             </Button>
                             <Button Grid.Column="2" Command="{Binding ClearCommand}"
-                                    Height="36" Cursor="Hand">
+                        Height="34" Cursor="Hand">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="btn" CornerRadius="8" BorderThickness="1"
-                                                BorderBrush="#333A3A5A" Background="#223A3A5A">
+                                    BorderBrush="#333A3A5A" Background="#223A3A5A">
                                             <TextBlock Text="CLEAR" FontFamily="Century Gothic"
-                                                       FontSize="11" FontWeight="Bold" Foreground="#AAAACC"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"/>
+                                           FontSize="11" FontWeight="Bold" Foreground="#AAAACC"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
@@ -322,6 +323,7 @@
                                 </Button.Template>
                             </Button>
                         </Grid>
+
                     </StackPanel>
                 </ScrollViewer>
             </Border>

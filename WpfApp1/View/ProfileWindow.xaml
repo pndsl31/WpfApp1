@@ -138,7 +138,7 @@
                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
 
-                <!-- Info card -->
+                <!-- Information box -->
                 <Border CornerRadius="16" Padding="32,24" BorderThickness="1">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -180,36 +180,21 @@
                         <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Fill="#15FFFFFF"/>
                         <Rectangle Grid.Row="7" Grid.ColumnSpan="2" Fill="#15FFFFFF"/>
 
-                        <!-- Row 0: Username -->
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="USERNAME"
-                                   Style="{StaticResource ProfileFieldLabel}"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1"
-                                   Text="{Binding CurrentUser.Username}"
-                                   Style="{StaticResource ProfileFieldValue}"/>
 
-                        <!-- Row 2: Student ID -->
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="STUDENT ID"
-                                   Style="{StaticResource ProfileFieldLabel}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding StudentId}"
-                                   Style="{StaticResource ProfileFieldValue}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="USERNAME" Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentUser.Username}" Style="{StaticResource ProfileFieldValue}"/>
 
-                        <!-- Row 4: Course -->
-                        <TextBlock Grid.Row="4" Grid.Column="0" Text="COURSE"
-                                   Style="{StaticResource ProfileFieldLabel}"/>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Course}"
-                                   Style="{StaticResource ProfileFieldValue}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="STUDENT ID" Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentUser.StudentNumber}" Style="{StaticResource ProfileFieldValue}"/>
 
-                        <!-- Row 6: Year/Section -->
-                        <TextBlock Grid.Row="6" Grid.Column="0" Text="YEAR / SECTION"
-                                   Style="{StaticResource ProfileFieldLabel}"/>
-                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding YearSection}"
-                                   Style="{StaticResource ProfileFieldValue}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="COURSE" Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentUser.Course}" Style="{StaticResource ProfileFieldValue}"/>
 
-                        <!-- Row 8: Email -->
-                        <TextBlock Grid.Row="8" Grid.Column="0" Text="EMAIL"
-                                   Style="{StaticResource ProfileFieldLabel}"/>
-                        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Email}"
-                                   Style="{StaticResource ProfileFieldValue}"/>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="YEAR / SECTION" Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding CurrentUser.YearSection}" Style="{StaticResource ProfileFieldValue}"/>
+
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="EMAIL" Style="{StaticResource ProfileFieldLabel}"/>
+                        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding CurrentUser.Email}" Style="{StaticResource ProfileFieldValue}"/>
                     </Grid>
                 </Border>
             </StackPanel>
